@@ -6,15 +6,13 @@ import ProfilePage from "./scenes/profilePage";
 
 function App() {
   return (
-    <div className=" flex justify-center text-3xl">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/profile/:userId" element={<ProfilePage />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/profile/:userId" element={<ProfilePage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

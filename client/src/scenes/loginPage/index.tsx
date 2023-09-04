@@ -1,7 +1,5 @@
-import React from "react";
-
 const LoginPage = () => {
-  return <div>LoginPage</div>;
+  return <div className="h-screen w-screen bg-black overflow-hidden">a</div>;
 };
 
 export default LoginPage;
