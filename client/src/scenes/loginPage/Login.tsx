@@ -42,9 +42,9 @@ export const Login: React.FC<LoginProps> = ({ onClick, loading }) => {
       />
       <Button onClick={() => console.log("Clicked!")} label="Continue" />
       <div className="flex justify-between font-medium w-[60%]">
-        <p className="text-white/80 ">Have an account? </p>
+        <p className="text-white/80 ">Don't have an account? </p>
         <p className="text-[#DC6A00] cursor-pointer" onClick={onClick}>
-          Log in
+          Sign in
         </p>
       </div>
     </div>
