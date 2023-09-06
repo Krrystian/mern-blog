@@ -1,26 +1,50 @@
-import { useState } from "react";
 import Input from "../../components/Input";
-import { CgNametag } from "react-icons/cg";
-import { RiAccountBoxLine, RiEyeOffLine } from "react-icons/ri";
+import { RiEyeOffLine } from "react-icons/ri";
 import { MdOutlineAlternateEmail } from "react-icons/md";
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
 import Button from "../../components/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { setLogin } from "../../state";
 
 interface LoginProps {
   onClick: () => void;
   loading?: boolean;
 }
 export const Login: React.FC<LoginProps> = ({ onClick, loading }) => {
+  // const user = JSON.parse(localStorage.getItem("persist:root") || "{}");
+  // // console.log(JSON.parse(user.user));
+  // const user2 = useSelector((state: any) => state);
+  // console.log(user2);
+  const dispach = useDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<FieldValues>({
     defaultValues: {
       email: "",
       password: "",
     },
   });
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const savedUserResponse = await fetch("http://localhost:3001/auth/login", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (savedUserResponse.ok) {
+      localStorage.clear();
+      const savedUser = await savedUserResponse.json();
+      dispach(
+        setLogin({ user: savedUser.sanitizedUser, token: savedUser.token })
+      );
+    } else {
+      alert("Invalid credentials");
+      setValue("password", "");
+    }
+  };
   return (
     <div className="text-white w-full h-full cursor-default flex justify-center items-center flex-col">
       <p className="font-bold text-2xl p-3">Sign in</p>
@@ -40,7 +64,7 @@ export const Login: React.FC<LoginProps> = ({ onClick, loading }) => {
         type="password"
         children={<RiEyeOffLine color="black" size={40} />}
       />
-      <Button onClick={() => console.log("Clicked!")} label="Continue" />
+      <Button onClick={handleSubmit(onSubmit)} label="Continue" />
       <div className="flex justify-between font-medium w-[60%]">
         <p className="text-white/80 ">Don't have an account? </p>
         <p className="text-[#DC6A00] cursor-pointer" onClick={onClick}>

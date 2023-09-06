@@ -26,9 +26,8 @@ export const Register: React.FC<RegisterProps> = ({ onClick, loading }) => {
       occupation: "",
     },
   });
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(JSON.stringify(data));
 
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const savedUserResponse = await fetch(
       "http://localhost:3001/auth/register",
       {

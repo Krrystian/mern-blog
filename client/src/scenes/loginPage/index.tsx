@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Register } from "./Register";
 import { Login } from "./Login";
 const LoginPage = () => {
-  const [register, shouldRegister] = useState<boolean>(true);
+  const [register, shouldRegister] = useState<boolean>(false);
   const loginHandler = () => {
     shouldRegister(!register);
   };
