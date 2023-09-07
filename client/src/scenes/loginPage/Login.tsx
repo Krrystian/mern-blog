@@ -3,9 +3,9 @@ import { RiEyeOffLine } from "react-icons/ri";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
 import Button from "../../components/Button";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setLogin } from "../../state";
-
+import { useNavigate } from "react-router-dom";
 interface LoginProps {
   onClick: () => void;
   loading?: boolean;
@@ -15,6 +15,7 @@ export const Login: React.FC<LoginProps> = ({ onClick, loading }) => {
   // // console.log(JSON.parse(user.user));
   // const user2 = useSelector((state: any) => state);
   // console.log(user2);
+  const navigate = useNavigate();
   const dispach = useDispatch();
   const {
     register,
@@ -40,6 +41,7 @@ export const Login: React.FC<LoginProps> = ({ onClick, loading }) => {
       dispach(
         setLogin({ user: savedUser.sanitizedUser, token: savedUser.token })
       );
+      navigate("/home");
     } else {
       alert("Invalid credentials");
       setValue("password", "");

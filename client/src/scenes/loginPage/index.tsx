@@ -6,6 +6,7 @@ const LoginPage = () => {
   const loginHandler = () => {
     shouldRegister(!register);
   };
+
   return (
     <div className="relative h-screen w-screen bg-black overflow-hidden flex flex-col lg:flex-row-reverse">
       <img
