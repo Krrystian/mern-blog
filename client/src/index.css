@@ -4,4 +4,5 @@
 @tailwind utilities;
 html, body, #root, .app {
   font-family: 'Rubik', sans-serif;
+  background-color: black;
 }
