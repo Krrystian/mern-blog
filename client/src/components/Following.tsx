@@ -10,6 +10,8 @@ const Following = () => {
             firstName="Adam"
             lastName="Johanson"
             image="https://res.cloudinary.com/dofuctnlf/image/upload/v1688543310/a16jw08lzzrgt6ajpfi1.jpg"
+            onClickProfile={() => console.log("clicked")}
+            onClickUnfollow={() => console.log("clicked")}
           />
           <User
             firstName="Filip"
