@@ -3,12 +3,11 @@ import { BiSearchAlt } from "react-icons/bi";
 
 const Navbar = () => {
   const [search, setSearch] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
   const handleSearch = () => {
     console.log(search);
   };
   return (
-    <div className="h-[100px] w-screen z-10 text-[#DC6A00] border-b-2 border-[#DC6A00] text-4xl flex  text-center bg-transparent">
+    <div className=" fixed h-[100px] w-full max-w-screen z-10 text-[#DC6A00] border-b-2 border-[#DC6A00] text-4xl flex text-center bg-black/90">
       <div className="w-[30%] cursor-default select-none h-full flex justify-center items-center">
         whY?
       </div>

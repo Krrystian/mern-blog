@@ -1,10 +1,14 @@
 import { BiUserMinus } from "react-icons/bi";
+import { FiSettings } from "react-icons/fi";
 interface UserProps {
   firstName: string;
   lastName: string;
   location?: string;
   image?: string;
   post?: boolean;
+  settings?: boolean;
+  bigger?: boolean;
+  onClickSettings?: () => void;
   onClickUnfollow?: () => void;
   onClickProfile?: () => void;
 }
@@ -14,6 +18,9 @@ const User: React.FC<UserProps> = ({
   location,
   image,
   post,
+  settings,
+  bigger,
+  onClickSettings,
   onClickProfile,
   onClickUnfollow,
 }) => {
@@ -25,13 +32,23 @@ const User: React.FC<UserProps> = ({
           onClick={onClickProfile}
         >
           <img src={image} className="w-[30px] rounded-full h-[30px]" alt="" />
-          <p>{firstName + " " + lastName}</p>
+          <p className={bigger ? "text-2xl" : ""}>
+            {firstName + " " + lastName}
+          </p>
         </div>
-        <BiUserMinus
-          className="cursor-pointer"
-          size={25}
-          onClick={onClickUnfollow}
-        />
+        {settings ? (
+          <FiSettings
+            className="cursor-pointer"
+            size={25}
+            onClick={onClickSettings}
+          />
+        ) : (
+          <BiUserMinus
+            className="cursor-pointer"
+            size={25}
+            onClick={onClickUnfollow}
+          />
+        )}
       </div>
     );
   }

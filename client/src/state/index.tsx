@@ -1,4 +1,4 @@
-import { createSlice, isAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 interface CounterState {
   user: { friends: any } | null;

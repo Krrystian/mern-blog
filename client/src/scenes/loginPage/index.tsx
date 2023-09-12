@@ -1,11 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Register } from "./Register";
 import { Login } from "./Login";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 const LoginPage = () => {
   const [register, shouldRegister] = useState<boolean>(false);
   const loginHandler = () => {
     shouldRegister(!register);
   };
+
+  const token = useSelector((state: any) => state.token);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (token) {
+      return navigate("/home");
+    }
+  }, []);
 
   return (
     <div className="relative h-screen w-screen bg-black overflow-hidden flex flex-col lg:flex-row-reverse">

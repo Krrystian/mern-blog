@@ -4,12 +4,13 @@ import { RiAccountBoxLine, RiEyeOffLine } from "react-icons/ri";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
 import Button from "../../components/Button";
+import { useState } from "react";
 
 interface RegisterProps {
   onClick: () => void;
-  loading?: boolean;
 }
-export const Register: React.FC<RegisterProps> = ({ onClick, loading }) => {
+export const Register: React.FC<RegisterProps> = ({ onClick }) => {
+  const [disabled, setDisabled] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
@@ -28,6 +29,7 @@ export const Register: React.FC<RegisterProps> = ({ onClick, loading }) => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    setDisabled(true);
     const savedUserResponse = await fetch(
       "http://localhost:3001/auth/register",
       {
@@ -36,27 +38,28 @@ export const Register: React.FC<RegisterProps> = ({ onClick, loading }) => {
         body: JSON.stringify(data),
       }
     );
+    setDisabled(false);
   };
   return (
     <div className="text-white w-full h-full cursor-default flex justify-center items-center flex-col">
       <p className="font-bold text-2xl p-3 ">Register</p>
       <Input
         register={register}
-        disabled={loading}
+        disabled={disabled}
         id="firstName"
         placeholder="First name"
         children={<CgNametag color="black" size={40} />}
       />
       <Input
         register={register}
-        disabled={loading}
+        disabled={disabled}
         id="lastName"
         placeholder="Last name"
         children={<RiAccountBoxLine color="black" size={40} />}
       />
       <Input
         register={register}
-        disabled={loading}
+        disabled={disabled}
         type="email"
         id="email"
         placeholder="Email address"
@@ -64,7 +67,7 @@ export const Register: React.FC<RegisterProps> = ({ onClick, loading }) => {
       />
       <Input
         register={register}
-        disabled={loading}
+        disabled={disabled}
         id="password"
         placeholder="Password"
         type="password"

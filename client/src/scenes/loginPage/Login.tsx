@@ -1,22 +1,23 @@
 import Input from "../../components/Input";
 import { RiEyeOffLine } from "react-icons/ri";
 import { MdOutlineAlternateEmail } from "react-icons/md";
-import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
+import { FieldValues, useForm, SubmitHandler, set } from "react-hook-form";
 import Button from "../../components/Button";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../state";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 interface LoginProps {
   onClick: () => void;
-  loading?: boolean;
 }
-export const Login: React.FC<LoginProps> = ({ onClick, loading }) => {
+export const Login: React.FC<LoginProps> = ({ onClick }) => {
   // const user = JSON.parse(localStorage.getItem("persist:root") || "{}");
   // // console.log(JSON.parse(user.user));
   // const user2 = useSelector((state: any) => state);
   // console.log(user2);
   const navigate = useNavigate();
   const dispach = useDispatch();
+  const [disabled, setDisabled] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
@@ -30,6 +31,7 @@ export const Login: React.FC<LoginProps> = ({ onClick, loading }) => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    setDisabled(true);
     const savedUserResponse = await fetch("http://localhost:3001/auth/login", {
       method: "POST",
       headers: { "Content-type": "application/json" },
@@ -46,13 +48,14 @@ export const Login: React.FC<LoginProps> = ({ onClick, loading }) => {
       alert("Invalid credentials");
       setValue("password", "");
     }
+    setDisabled(false);
   };
   return (
     <div className="text-white w-full h-full cursor-default flex justify-center items-center flex-col">
       <p className="font-bold text-2xl p-3">Sign in</p>
       <Input
         register={register}
-        disabled={loading}
+        disabled={disabled}
         type="email"
         id="email"
         placeholder="Email address"
@@ -60,7 +63,7 @@ export const Login: React.FC<LoginProps> = ({ onClick, loading }) => {
       />
       <Input
         register={register}
-        disabled={loading}
+        disabled={disabled}
         id="password"
         placeholder="Password"
         type="password"
