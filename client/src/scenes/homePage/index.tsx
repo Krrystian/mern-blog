@@ -6,7 +6,7 @@ import Following from "../../components/Following";
 import { Profile } from "../../components/Profile";
 import Posts from "../../components/Posts";
 const HomePage = () => {
-  const token = useSelector((state: any) => state.token);
+  const token = useSelector((state: any) => state.auth.token);
   const navigate = useNavigate();
   // Prevents user from accessing this page if not logged in
   useEffect(() => {

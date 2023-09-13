@@ -3,8 +3,9 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 //Redux Persist is used to keep / persist Redux storage in User's localStorage
-import authReducer from "./state";
-import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./state/index";
+import modalReducer from "./state/modal";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import {
   persistStore,
@@ -20,7 +21,11 @@ import storage from "redux-persist/lib/storage";
 import { PersistGate } from "redux-persist/integration/react";
 //From Redux-Persist documentation
 const persistConfig = { key: "root", storage, version: 1 };
-const persistedReducer = persistReducer(persistConfig, authReducer);
+const reducers = combineReducers({
+  auth: authReducer,
+  modal: modalReducer,
+});
+const persistedReducer = persistReducer(persistConfig, reducers);
 const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) => {

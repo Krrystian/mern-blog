@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import User from "./user/User";
 import { Details } from "./user/Details";
 export const Profile = () => {
-  const user = useSelector((state: any) => state.user);
+  const user = useSelector((state: any) => state.auth.user);
   return (
     <div className="w-[30%] top-[100px] my-6 px-8 fixed">
       <div className="w-full min-h-[10%]"></div>

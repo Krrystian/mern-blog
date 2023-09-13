@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFriends } from "../state";
 
 const Following = () => {
-  const userId = useSelector((state: any) => state.user._id);
-  const token = useSelector((state: any) => state.token);
-  const friends = useSelector((state: any) => state.user.friends);
+  const userId = useSelector((state: any) => state.auth.user._id);
+  const token = useSelector((state: any) => state.auth.token);
+  const friends = useSelector((state: any) => state.auth.user.friends);
   const dispatch = useDispatch();
   const fetchFriends = async () => {
     const friendList = await fetch(

@@ -25,8 +25,7 @@ const Post: React.FC<PostProps> = ({
   likeAmount = 0,
   commentsAmount = 0,
 }) => {
-  const userFriends = useSelector((state: any) => state.user.friends);
-
+  const userFriends = useSelector((state: any) => state.auth.user.friends);
   return (
     <div className="w-full min-h-[300px] p-6 overflow-hidden">
       <User
