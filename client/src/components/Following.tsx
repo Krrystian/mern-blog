@@ -43,15 +43,11 @@ const Following = () => {
                   firstName={firstName}
                   lastName={lastName}
                   image={picturePath}
+                  friend={true}
                 />
               );
             }
           )}
-          <User
-            firstName="Filip"
-            lastName="Andersson"
-            image="https://res.cloudinary.com/dofuctnlf/image/upload/v1688543310/a16jw08lzzrgt6ajpfi1.jpg"
-          />
         </div>
       </div>
     </div>

@@ -1,13 +1,13 @@
-import { BiUserMinus } from "react-icons/bi";
+import { BiUserMinus, BiUserPlus } from "react-icons/bi";
 import { FiSettings } from "react-icons/fi";
 interface UserProps {
   firstName: string;
   lastName: string;
   location?: string;
   image?: string;
-  post?: boolean;
   settings?: boolean;
   bigger?: boolean;
+  friend?: boolean;
   onClickSettings?: () => void;
   onClickUnfollow?: () => void;
   onClickProfile?: () => void;
@@ -17,41 +17,53 @@ const User: React.FC<UserProps> = ({
   lastName,
   location,
   image,
-  post,
+  friend,
   settings,
   bigger,
   onClickSettings,
   onClickProfile,
   onClickUnfollow,
 }) => {
-  if (!post) {
-    return (
-      <div className="flex items-center justify-between text-white/80 text-xl pb-3">
-        <div
-          className="flex gap-2 cursor-pointer hover:text-white"
-          onClick={onClickProfile}
-        >
-          <img src={image} className="w-[30px] rounded-full h-[30px]" alt="" />
-          <p className={bigger ? "text-2xl" : ""}>
+  return (
+    <div className="flex items-center justify-between text-white/80 text-xl pb-3">
+      <div className="flex gap-2 cursor-pointer" onClick={onClickProfile}>
+        <img
+          src={image}
+          className="w-[30px] rounded-full h-[30px] flex self-center"
+          alt=""
+        />
+        <div className="flex flex-col">
+          <p
+            className={
+              bigger ? "text-2xl hover:text-white" : " hover:text-white"
+            }
+          >
             {firstName + " " + lastName}
           </p>
+          {location && <p className="text-xs">{location}</p>}
         </div>
-        {settings ? (
-          <FiSettings
-            className="cursor-pointer"
-            size={25}
-            onClick={onClickSettings}
-          />
-        ) : (
-          <BiUserMinus
-            className="cursor-pointer"
-            size={25}
-            onClick={onClickUnfollow}
-          />
-        )}
       </div>
-    );
-  }
+      {settings ? (
+        <FiSettings
+          className="cursor-pointer"
+          size={25}
+          onClick={onClickSettings}
+        />
+      ) : friend ? (
+        <BiUserMinus
+          className="cursor-pointer"
+          size={25}
+          onClick={onClickUnfollow}
+        />
+      ) : (
+        <BiUserPlus
+          className="cursor-pointer"
+          size={25}
+          onClick={onClickUnfollow}
+        />
+      )}
+    </div>
+  );
 };
 
 export default User;
