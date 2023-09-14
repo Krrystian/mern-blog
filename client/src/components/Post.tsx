@@ -26,6 +26,18 @@ const Post: React.FC<PostProps> = ({
   commentsAmount = 0,
 }) => {
   const userFriends = useSelector((state: any) => state.auth.user.friends);
+  const token = useSelector((state: any) => state.auth.token);
+  const userId = useSelector((state: any) => state.auth.user._id);
+  const handleAction = async (id: string) => {
+    const res = await fetch(`http://localhost:3001/users/${userId}/${id}/`, {
+      method: "PATCH",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (res.ok) {
+      window.scrollTo(0, 0); // Scroll to top to prevent infinite scroll from triggering
+      window.location.reload();
+    }
+  };
   return (
     <div className="w-full min-h-[300px] p-6 overflow-hidden">
       <User
@@ -34,6 +46,7 @@ const Post: React.FC<PostProps> = ({
         image={profilePicture}
         location={location}
         friend={userFriends.some((friend: any) => friend._id === id)}
+        onClickUnfollow={() => handleAction(id)}
       />
       <div className="max-h-[800px]">
         <p className="text-white/80 text-md">{desc}</p>

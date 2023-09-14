@@ -8,6 +8,18 @@ const Following = () => {
   const token = useSelector((state: any) => state.auth.token);
   const friends = useSelector((state: any) => state.auth.user.friends);
   const dispatch = useDispatch();
+
+  const handleFollow = async (id: string) => {
+    const res = await fetch(`http://localhost:3001/users/${userId}/${id}/`, {
+      method: "PATCH",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (res.ok) {
+      window.scrollTo(0, 0); // Scroll to top to prevent infinite scroll from triggering
+      window.location.reload();
+    }
+  };
+
   const fetchFriends = async () => {
     const friendList = await fetch(
       `http://localhost:3001/users/${userId}/friends`,
@@ -25,6 +37,7 @@ const Following = () => {
     fetchFriends();
   }, []);
   type Friend = {
+    _id: string;
     firstName: string;
     lastName: string;
     picturePath?: string;
@@ -35,18 +48,28 @@ const Following = () => {
       <div className="w-full min-h-[10%]">
         <h1 className="text-2xl font-bold text-center my-6">Your following</h1>
         <div className="flex flex-col gap-4 px-8">
-          {friends.map(
-            ({ firstName, lastName, picturePath }: Friend, index: number) => {
-              return (
-                <User
-                  key={index}
-                  firstName={firstName}
-                  lastName={lastName}
-                  image={picturePath}
-                  friend={true}
-                />
-              );
-            }
+          {friends.length > 0 ? (
+            friends.map(
+              (
+                { firstName, lastName, picturePath, _id }: Friend,
+                index: number
+              ) => {
+                return (
+                  <User
+                    key={index}
+                    firstName={firstName}
+                    lastName={lastName}
+                    image={picturePath}
+                    friend={true}
+                    onClickUnfollow={() => handleFollow(_id)}
+                  />
+                );
+              }
+            )
+          ) : (
+            <p className="text-center text-xl text-white/80">
+              You are not following anyone yet
+            </p>
           )}
         </div>
       </div>

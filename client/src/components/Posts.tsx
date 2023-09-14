@@ -11,7 +11,6 @@ const Posts = () => {
   const [page, setPage] = useState<number>(-1);
   // FETCH POSTS ON MOUNT
   const fetchPosts = async () => {
-    setPage(0);
     dispatch(setPosts({ posts: [] }));
     const res = await fetch(`http://localhost:3001/posts`, {
       headers: {
@@ -42,14 +41,16 @@ const Posts = () => {
     }
   };
   useEffect(() => {
+    setPage(0);
     fetchPosts();
   }, []);
+  console.log(posts);
   return (
     <div className="w-[40%] border-x-2 border-[#DC6A00] min-h-screen text-white">
       <InfiniteScroll
         dataLength={posts?.length}
         next={fetchMorePosts}
-        hasMore={posts?.length > 0 ? true : false}
+        hasMore={posts?.length % 5 > 0 ? false : true}
         loader={
           <div className="w-full flex justify-center items-center text-3xl p-4 pb-8">
             Loading...
