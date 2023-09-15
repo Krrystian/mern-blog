@@ -10,14 +10,11 @@ const Following = () => {
   const dispatch = useDispatch();
 
   const handleFollow = async (id: string) => {
-    const res = await fetch(`http://localhost:3001/users/${userId}/${id}/`, {
+    await fetch(`http://localhost:3001/users/${userId}/${id}/`, {
       method: "PATCH",
       headers: { Authorization: `Bearer ${token}` },
     });
-    if (res.ok) {
-      window.scrollTo(0, 0); // Scroll to top to prevent infinite scroll from triggering
-      window.location.reload();
-    }
+    fetchFriends();
   };
 
   const fetchFriends = async () => {

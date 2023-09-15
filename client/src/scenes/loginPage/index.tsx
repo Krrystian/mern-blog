@@ -10,7 +10,7 @@ const LoginPage = () => {
     shouldRegister(!register);
   };
 
-  const token = useSelector((state: any) => state.token);
+  const token = useSelector((state: any) => state.auth.token);
   const navigate = useNavigate();
   useEffect(() => {
     if (token) {

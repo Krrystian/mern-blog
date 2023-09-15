@@ -2,6 +2,7 @@
 - [] Settings modal for USER
 - [] New post modal for NAVBAR
 - [x] Unfollow / follow API call
+- [x] Change postUpdate for better UX - update post not posts component
 - [] Modal are you sure you want to unfollow
 - [] Search for POSTS based on USER NAME or LOCATION
 

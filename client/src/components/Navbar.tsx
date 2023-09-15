@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
+import { useDispatch } from "react-redux";
+import { newPostOpen } from "../state/modal";
 
 const Navbar = () => {
   const [search, setSearch] = useState("");
+  const dispatch = useDispatch();
   const handleSearch = () => {
     console.log(search);
   };
@@ -30,7 +33,12 @@ const Navbar = () => {
         />
       </div>
 
-      <div className="w-[30%] h-full flex justify-center items-center">
+      <div
+        className="w-[30%] h-full flex justify-center items-center"
+        onClick={() => {
+          dispatch(newPostOpen());
+        }}
+      >
         New Post
       </div>
     </div>

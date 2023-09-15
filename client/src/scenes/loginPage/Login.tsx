@@ -1,7 +1,7 @@
 import Input from "../../components/Input";
 import { RiEyeOffLine } from "react-icons/ri";
 import { MdOutlineAlternateEmail } from "react-icons/md";
-import { FieldValues, useForm, SubmitHandler, set } from "react-hook-form";
+import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
 import Button from "../../components/Button";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../state";

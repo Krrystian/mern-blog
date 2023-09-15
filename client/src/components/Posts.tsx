@@ -3,12 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import Post from "./Post";
 import { setPosts } from "../state";
 import InfiniteScroll from "react-infinite-scroll-component";
-const Posts = () => {
+
+interface PostsProps {
+  profilePage?: boolean;
+}
+const Posts: React.FC<PostsProps> = ({ profilePage = false }) => {
   const dispatch = useDispatch();
-  const userId: string = useSelector((state: any) => state.auth.user._id);
   const token = useSelector((state: any) => state.auth.token);
   const posts = useSelector((state: any) => state.auth.posts);
   const [page, setPage] = useState<number>(-1);
+  const userId: string = useSelector((state: any) => state.auth.user._id);
+
   // FETCH POSTS ON MOUNT
   const fetchPosts = async () => {
     dispatch(setPosts({ posts: [] }));
@@ -44,7 +49,6 @@ const Posts = () => {
     setPage(0);
     fetchPosts();
   }, []);
-  console.log(posts);
   return (
     <div className="w-[40%] border-x-2 border-[#DC6A00] min-h-screen text-white">
       <InfiniteScroll
@@ -67,6 +71,7 @@ const Posts = () => {
             return (
               <Post
                 key={post._id}
+                postId={post._id}
                 id={post.userId}
                 firstName={post.firstName}
                 lastName={post.lastName}

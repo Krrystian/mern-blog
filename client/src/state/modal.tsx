@@ -5,6 +5,7 @@ interface CounterState {
   };
   post: {
     isOpen: boolean;
+    newPostIsOpen: boolean;
   };
   follower: {
     isOpen: boolean;
@@ -16,6 +17,7 @@ const initialState: CounterState = {
   },
   post: {
     isOpen: false,
+    newPostIsOpen: false,
   },
   follower: {
     isOpen: false,
@@ -27,18 +29,29 @@ export const modalSlice = createSlice({
   initialState,
   reducers: {
     settingsOpen: (state) => {
+      document.body.style.overflow = "hidden";
       state.settings.isOpen = true;
     },
     settingsClose: (state) => {
       state.settings.isOpen = false;
     },
     postOpen: (state) => {
+      document.body.style.overflow = "hidden";
       state.post.isOpen = true;
     },
     postClose: (state) => {
       state.post.isOpen = false;
     },
+    newPostOpen: (state) => {
+      document.body.style.overflow = "hidden";
+      state.post.newPostIsOpen = true;
+    },
+    newPostClose: (state) => {
+      document.body.style.overflow = "auto";
+      state.post.newPostIsOpen = false;
+    },
     followerOpen: (state) => {
+      document.body.style.overflow = "hidden";
       state.follower.isOpen = true;
     },
     followerClose: (state) => {
@@ -54,5 +67,7 @@ export const {
   postOpen,
   followerClose,
   followerOpen,
+  newPostOpen,
+  newPostClose,
 } = modalSlice.actions;
 export default modalSlice.reducer;
