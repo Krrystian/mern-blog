@@ -8,6 +8,7 @@ interface UserProps {
   settings?: boolean;
   bigger?: boolean;
   friend?: boolean;
+  isUser?: boolean;
   onClickSettings?: () => void;
   onClickUnfollow?: () => void;
   onClickProfile?: () => void;
@@ -20,6 +21,7 @@ const User: React.FC<UserProps> = ({
   friend,
   settings,
   bigger,
+  isUser,
   onClickSettings,
   onClickProfile,
   onClickUnfollow,
@@ -55,13 +57,13 @@ const User: React.FC<UserProps> = ({
           size={25}
           onClick={onClickUnfollow}
         />
-      ) : (
+      ) : !isUser ? (
         <BiUserPlus
           className="cursor-pointer"
           size={25}
           onClick={onClickUnfollow}
         />
-      )}
+      ) : null}
     </div>
   );
 };

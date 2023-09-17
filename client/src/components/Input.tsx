@@ -8,6 +8,7 @@ interface InputProps {
   children?: any;
   register: UseFormRegister<FieldValues>;
   required?: boolean;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -17,6 +18,7 @@ const Input: React.FC<InputProps> = ({
   disabled,
   type = "text",
   register,
+  onKeyDown,
   required,
 }) => {
   return (
@@ -28,6 +30,7 @@ const Input: React.FC<InputProps> = ({
         {...register(id, { required })}
         type={type}
         disabled={disabled}
+        onKeyDown={onKeyDown}
       ></input>
       <div className="w-[10%] h-full bg-[#DC8A00] flex items-center justify-center">
         {children}

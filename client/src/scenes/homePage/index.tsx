@@ -6,11 +6,15 @@ import Following from "../../components/Following";
 import { Profile } from "../../components/Profile";
 import Posts from "../../components/Posts";
 import NewPost from "../../components/modals/NewPost";
+import Settings from "../../components/modals/Settings";
 
 const HomePage = () => {
   const token = useSelector((state: any) => state.auth.token);
   const navigate = useNavigate();
-  const open = useSelector((state: any) => state.modal.post.newPostIsOpen);
+  const openSettings = useSelector((state: any) => state.modal.settings.isOpen);
+  const openNewPost = useSelector(
+    (state: any) => state.modal.post.newPostIsOpen
+  );
   // Prevents user from accessing this page if not logged in
   useEffect(() => {
     if (!token) {
@@ -22,7 +26,8 @@ const HomePage = () => {
     token && (
       <>
         <div className="max-w-screen min-h-screen overflow-x-hidden">
-          <NewPost open={open} />
+          <NewPost open={openNewPost} />
+          <Settings open={openSettings} />
           <Navbar />
           <Profile />
           <Following />

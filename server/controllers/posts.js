@@ -31,6 +31,7 @@ export const getFeedPosts = async (req, res) => {
   const page = req.query.page || 0;
   try {
     const post = await Post.find()
+      .sort({ createdAt: "desc" })
       .limit(5)
       .skip(page * 5);
     res.status(200).json(post);

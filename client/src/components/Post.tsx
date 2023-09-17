@@ -81,13 +81,14 @@ const Post: React.FC<PostProps> = ({
     }
   };
   return (
-    <div className="w-full min-h-[300px] p-6 overflow-hidden">
+    <div className="w-full min-h-[150px] p-6 overflow-hidden">
       <User
         firstName={firstName}
         lastName={lastName}
         image={profilePicture}
         location={location}
         friend={userFriends.some((friend: any) => friend._id === id)}
+        isUser={id === userId}
         onClickUnfollow={() => handleAction(id)}
       />
       <div className="max-h-[800px]">
@@ -115,9 +116,7 @@ const Post: React.FC<PostProps> = ({
             onClick={() => handleLike()}
           />
         )}
-        {likeAmount > 0 && (
-          <p className="text-white/80 cursor-default">{likeValue}</p>
-        )}
+        <p className="text-white/80 cursor-default">{likeValue}</p>
         <BiCommentDetail size={25} className="cursor-pointer ml-3" />
         {commentsAmount > 0 && (
           <p className="text-white/80 cursor-default">{commentsAmount}</p>

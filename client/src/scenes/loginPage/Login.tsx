@@ -68,6 +68,11 @@ export const Login: React.FC<LoginProps> = ({ onClick }) => {
         placeholder="Password"
         type="password"
         children={<RiEyeOffLine color="black" size={40} />}
+        onKeyDown={(e: any) => {
+          if (e.key === "Enter") {
+            handleSubmit(onSubmit)();
+          }
+        }}
       />
       <Button onClick={handleSubmit(onSubmit)} label="Continue" />
       <div className="flex justify-between font-medium w-[60%]">

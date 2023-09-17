@@ -24,7 +24,7 @@ export const Details: React.FC<DetailsProps> = ({
         <MdOutlineWork size={25} color="DC6A00" />
         <p>{occupation || "Unknown"}</p>
       </div>
-      <div className=" font-medium">
+      <div className="font-medium flex flex-col gap-2">
         <p>
           <span className="text-[#DC6A00]">Food earned:</span> {food}
         </p>

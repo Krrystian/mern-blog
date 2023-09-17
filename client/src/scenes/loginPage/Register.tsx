@@ -39,6 +39,7 @@ export const Register: React.FC<RegisterProps> = ({ onClick }) => {
       }
     );
     setDisabled(false);
+    window.location.reload();
   };
   return (
     <div className="text-white w-full h-full cursor-default flex justify-center items-center flex-col">

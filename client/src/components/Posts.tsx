@@ -12,6 +12,7 @@ const Posts: React.FC<PostsProps> = ({ profilePage = false }) => {
   const token = useSelector((state: any) => state.auth.token);
   const posts = useSelector((state: any) => state.auth.posts);
   const [page, setPage] = useState<number>(-1);
+  const [newData, setNewData] = useState<any>();
   const userId: string = useSelector((state: any) => state.auth.user._id);
 
   // FETCH POSTS ON MOUNT
@@ -25,7 +26,9 @@ const Posts: React.FC<PostsProps> = ({ profilePage = false }) => {
     });
     const data = await res.json();
     dispatch(setPosts({ posts: data }));
+    setNewData(data);
   };
+
   // INFINITE SCROLL FETCH
   const fetchMorePosts = async () => {
     const newPage = page + 1;
@@ -43,6 +46,7 @@ const Posts: React.FC<PostsProps> = ({ profilePage = false }) => {
       });
       if (newData.length > 0)
         dispatch(setPosts({ posts: [...posts, ...newData] }));
+      setNewData(newData);
     }
   };
   useEffect(() => {
@@ -54,7 +58,7 @@ const Posts: React.FC<PostsProps> = ({ profilePage = false }) => {
       <InfiniteScroll
         dataLength={posts?.length}
         next={fetchMorePosts}
-        hasMore={posts?.length % 5 > 0 ? false : true}
+        hasMore={newData?.length > 0}
         loader={
           <div className="w-full flex justify-center items-center text-3xl p-4 pb-8">
             Loading...
