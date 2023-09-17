@@ -11,7 +11,10 @@ const Modal: React.FC<ModalProps> = ({ heading, body }) => {
   const dispatch = useDispatch();
   //useForm
   return (
-    <div className="xl:w-3/4 xl:h-3/4 lg:h-3/5 lg:w-3/5 w-full h-full lg:border-4 rounded-xl bg-black text-white border-[#DC6A00] relative">
+    <div
+      className="xl:w-2/4 xl:h-3/4 lg:h-3/5 lg:w-2/5 w-full h-full lg:border-4 rounded-xl bg-black text-white border-[#DC6A00] relative overflow-hidden 
+    "
+    >
       <AiOutlineClose
         color="#dc6a00"
         size={40}
@@ -21,7 +24,7 @@ const Modal: React.FC<ModalProps> = ({ heading, body }) => {
       <p className="w-full h-[100px] flex text-center justify-center p-8 text-2xl">
         {heading}
       </p>
-      <div>{body}</div>
+      <div className="h-full w-full">{body}</div>
     </div>
   );
 };

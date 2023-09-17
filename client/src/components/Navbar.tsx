@@ -39,7 +39,7 @@ const Navbar = () => {
           dispatch(newPostOpen());
         }}
       >
-        New Post
+        <p className="cursor-pointer">New Post</p>
       </div>
     </div>
   );
