@@ -33,6 +33,7 @@ export const modalSlice = createSlice({
       state.settings.isOpen = true;
     },
     settingsClose: (state) => {
+      document.body.style.overflow = "auto";
       state.settings.isOpen = false;
     },
     postOpen: (state) => {
@@ -40,6 +41,7 @@ export const modalSlice = createSlice({
       state.post.isOpen = true;
     },
     postClose: (state) => {
+      document.body.style.overflow = "auto";
       state.post.isOpen = false;
     },
     newPostOpen: (state) => {
@@ -55,6 +57,7 @@ export const modalSlice = createSlice({
       state.follower.isOpen = true;
     },
     followerClose: (state) => {
+      document.body.style.overflow = "auto";
       state.follower.isOpen = false;
     },
   },

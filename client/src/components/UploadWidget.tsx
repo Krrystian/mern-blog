@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react";
-import { set } from "react-hook-form";
 
 interface UploadWidgetProps {
   setUrl: (url: string) => void;
