@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { settingsClose } from "../../state/modal";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdOutlineWork } from "react-icons/md";
-import { setLogout } from "../../state";
+import { setCopyLogin, setLogout } from "../../state";
 import { useNavigate } from "react-router-dom";
 import { AiFillEdit } from "react-icons/ai";
 import UpdateSettings from "./UpdateSettings";
@@ -14,25 +14,29 @@ interface SettingsProps {
 const Settings: React.FC<SettingsProps> = ({ open }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userCopy = useSelector((state: any) => state.auth.userCopy);
   const user = useSelector((state: any) => state.auth.user);
-  if (open) document.body.style.overflow = "hidden";
   const [updateModalOpen, setUpdateModalOpen] = React.useState<boolean>(false);
   const [type, setType] = React.useState<string>("");
   const [callSubmit, setCallSubmit] = React.useState<boolean>(false);
+
+  if (open) document.body.style.overflow = "hidden";
+  useEffect(() => {
+    setCallSubmit(false);
+    if (open) dispatch(setCopyLogin({ user: user }));
+  }, [open]);
 
   const handleUpdate = (type: string) => {
     setUpdateModalOpen(true);
     setType(type);
   };
-  useEffect(() => {
-    setCallSubmit(false);
-  }, [open]);
+
   const body = (
     <div className="flex flex-col mx-3 py-6">
       <div className="flex md:flex-row flex-col justify-between py-6 border-t-2 border-[#DC6A00]">
         <div className="flex flex-col gap-3 w-full items-center">
           <img
-            src={user.picturePath}
+            src={userCopy.picturePath}
             alt="user"
             width={75}
             height={75}
@@ -40,12 +44,12 @@ const Settings: React.FC<SettingsProps> = ({ open }) => {
           />
           <div className="flex gap-3 cursor-default">
             <p className="text-2xl flex items-center">
-              {user.firstName + " " + user.lastName}
+              {userCopy.firstName + " " + userCopy.lastName}
             </p>
           </div>
           <div className="flex gap-2">
             <FaLocationDot size={30} color="DC6A00" />
-            <p className="text-xl">{user.location || "Unknown"}</p>
+            <p className="text-xl">{userCopy.location || "Unknown"}</p>
             <AiFillEdit
               size={23}
               className="cursor-pointer"
@@ -54,7 +58,7 @@ const Settings: React.FC<SettingsProps> = ({ open }) => {
           </div>
           <div className="flex gap-2">
             <MdOutlineWork size={30} color="DC6A00" />
-            <p className="text-xl">{user.occupancy || "Unknown"}</p>
+            <p className="text-xl">{userCopy.occupation || "Unknown"}</p>
             <AiFillEdit
               size={23}
               className="cursor-pointer"
@@ -64,11 +68,11 @@ const Settings: React.FC<SettingsProps> = ({ open }) => {
           <div className="font-medium flex flex-col gap-2 text-xl">
             <p>
               <span className="text-[#DC6A00]">Food earned: </span>
-              {user.impressions}
+              {userCopy.impressions}
             </p>
             <p>
               <span className="text-[#DC6A00]">Profile visits: </span>
-              {user.viewedProfile}
+              {userCopy.viewedProfile}
             </p>
           </div>
         </div>
@@ -129,7 +133,7 @@ const Settings: React.FC<SettingsProps> = ({ open }) => {
         callSubmit={callSubmit}
         open={updateModalOpen}
         type={type}
-        close={() => setUpdateModalOpen(false)} //DISBAND THIS
+        close={() => setUpdateModalOpen(false)}
       />
     </div>
   );

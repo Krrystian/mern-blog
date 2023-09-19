@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import Modal from "./Modal";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setCopyLogin } from "../../state";
 interface UpdateSettingsProps {
   open: boolean;
   type: string;
@@ -14,15 +15,11 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
   close,
   callSubmit,
 }) => {
-  const user = useSelector((state: any) => state.auth.user);
+  const userCopy = useSelector((state: any) => state.auth.userCopy);
   const token = useSelector((state: any) => state.auth.token);
-  const {
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm<FieldValues>({
+  const { handleSubmit, setValue } = useForm<FieldValues>({
     defaultValues: {
-      id: user._id,
+      id: userCopy._id,
       location: "",
       occupancy: "",
       email: "",
@@ -32,32 +29,31 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
       currentPassword: "",
     },
   });
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    const res = fetch(`/api/users/${user._id}/update`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: JSON.stringify(data),
-    });
-    console.log(res);
-  };
-  useEffect(() => {
-    if (callSubmit === true) handleSubmit(onSubmit)();
-  }, [callSubmit]);
+  const dispatch = useDispatch();
   const currentEmail = useRef<HTMLInputElement>(null);
   const email = useRef<HTMLInputElement>(null);
   const location = useRef<HTMLInputElement>(null);
   const occupancy = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
   const currentPassword = useRef<HTMLInputElement>(null);
-  const header = useMemo(() => {
-    if (type === "email") return "Change email";
-    else if (type === "password") return "Change password";
-    else if (type === "location") return "Change location";
-    else return "Change occupancy";
-  }, [type]);
+
+  useEffect(() => {
+    if (callSubmit === true) handleSubmit(onSubmit)();
+  }, [callSubmit]);
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const res = await fetch(
+      `http://localhost:3001/users/${userCopy._id}/update`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const response = await res.json();
+  };
 
   const emailBody = (
     <div className="mx-3 py-6 font-medium grid grid-cols-2 text-xl border-t-2 border-[#DC6A00]">
@@ -117,7 +113,7 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
         id="currentPassword"
         className="p-3 bg-inherit focus:outline-none"
         placeholder="Type your password"
-        type="currentPassword"
+        type="password"
         ref={currentPassword}
       ></input>
       <p className="flex justify-end items-center px-4 cursor-default">
@@ -184,6 +180,11 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
           className="w-[50%] p-3 bg-[#DC6A00] duration-500 hover:bg-[#DC6A00]/60"
           onClick={() => {
             setValue("location", location.current?.value);
+            const changedUser = {
+              ...userCopy,
+              location: location.current?.value,
+            };
+            dispatch(setCopyLogin({ user: changedUser }));
             if (location.current !== null) location.current.value = "";
             close();
           }}
@@ -209,8 +210,8 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
         <button
           className="w-[50%] p-3 bg-[#DC6A00] duration-500 hover:bg-[#DC6A00]/60"
           onClick={() => {
-            close();
             if (occupancy.current !== null) occupancy.current.value = "";
+            close();
           }}
         >
           Cancel
@@ -219,7 +220,13 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
           className="w-[50%] p-3 bg-[#DC6A00] duration-500 hover:bg-[#DC6A00]/60"
           onClick={() => {
             setValue("occupancy", occupancy.current?.value);
+            const changedUser = {
+              ...userCopy,
+              occupation: occupancy.current?.value,
+            };
+            console.log(changedUser);
             if (occupancy.current !== null) occupancy.current.value = "";
+            dispatch(setCopyLogin({ user: changedUser }));
             close();
           }}
         >
@@ -228,6 +235,13 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
       </div>
     </div>
   );
+
+  const header = useMemo(() => {
+    if (type === "email") return "Change email";
+    else if (type === "password") return "Change password";
+    else if (type === "location") return "Change location";
+    else return "Change occupancy";
+  }, [type]);
 
   const body = useMemo(() => {
     if (type === "email") return emailBody;

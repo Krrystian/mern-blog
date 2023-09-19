@@ -2,11 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface CounterState {
   user: { friends: any } | null;
+  userCopy: { friends: any } | null;
   token: string | null;
   posts: any;
 }
 const initialState: CounterState = {
   user: null,
+  userCopy: null,
   token: null,
   posts: [],
 };
@@ -40,9 +42,18 @@ export const authSlice = createSlice({
       });
       state.posts = updatedPosts;
     },
+    setCopyLogin: (state, action) => {
+      state.userCopy = action.payload.user;
+    },
   },
 });
 
-export const { setFriends, setLogin, setLogout, setPost, setPosts } =
-  authSlice.actions;
+export const {
+  setFriends,
+  setLogin,
+  setLogout,
+  setPost,
+  setPosts,
+  setCopyLogin,
+} = authSlice.actions;
 export default authSlice.reducer;

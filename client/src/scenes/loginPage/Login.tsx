@@ -4,7 +4,7 @@ import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
 import Button from "../../components/Button";
 import { useDispatch } from "react-redux";
-import { setLogin } from "../../state";
+import { setCopyLogin, setLogin } from "../../state";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 interface LoginProps {
@@ -16,7 +16,7 @@ export const Login: React.FC<LoginProps> = ({ onClick }) => {
   // const user2 = useSelector((state: any) => state);
   // console.log(user2);
   const navigate = useNavigate();
-  const dispach = useDispatch();
+  const dispatch = useDispatch();
   const [disabled, setDisabled] = useState<boolean>(false);
   const {
     register,
@@ -40,9 +40,10 @@ export const Login: React.FC<LoginProps> = ({ onClick }) => {
     if (savedUserResponse.ok) {
       localStorage.clear();
       const savedUser = await savedUserResponse.json();
-      dispach(
+      dispatch(
         setLogin({ user: savedUser.sanitizedUser, token: savedUser.token })
       );
+      dispatch(setCopyLogin({ user: savedUser.sanitizedUser }));
       navigate("/home");
     } else {
       alert("Invalid credentials");
