@@ -5,6 +5,7 @@ import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
 import Button from "../../components/Button";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 interface RegisterProps {
   onClick: () => void;
@@ -38,8 +39,32 @@ export const Register: React.FC<RegisterProps> = ({ onClick }) => {
         body: JSON.stringify(data),
       }
     );
+    const savedUser = await savedUserResponse.json();
+    if (savedUserResponse.ok) {
+      toast.success("Your account has been created!", {
+        position: "top-center",
+        autoClose: 1200,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      window.location.reload();
+    } else {
+      toast.error(savedUser.error, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
     setDisabled(false);
-    window.location.reload();
   };
   return (
     <div className="text-white w-full h-full cursor-default flex justify-center items-center flex-col">

@@ -29,8 +29,20 @@ export const createPost = async (req, res) => {
 /* READ */
 export const getFeedPosts = async (req, res) => {
   const page = req.query.page || 0;
+  const filter = req.query.filter || "";
+  const splitted = filter.split(" ");
   try {
-    const post = await Post.find()
+    let query = {
+      $or: [
+        { location: { $regex: filter, $options: "i" } },
+        { firstName: { $regex: splitted[0], $options: "i" } },
+        { lastName: { $regex: splitted[splitted.length - 1], $options: "i" } },
+      ],
+    };
+    if (filter === "") {
+      delete query.$or;
+    }
+    const post = await Post.find(query)
       .sort({ createdAt: "desc" })
       .limit(5)
       .skip(page * 5);

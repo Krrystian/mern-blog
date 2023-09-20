@@ -2,7 +2,9 @@ import React, { useEffect, useMemo, useRef } from "react";
 import Modal from "./Modal";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
-import { setCopyLogin } from "../../state";
+import { setCopyUser, setUser } from "../../state";
+import { settingsClose } from "../../state/modal";
+import { toast } from "react-toastify";
 interface UpdateSettingsProps {
   open: boolean;
   type: string;
@@ -38,8 +40,9 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
   const currentPassword = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (callSubmit === true) handleSubmit(onSubmit)();
+    if (callSubmit) handleSubmit(onSubmit)();
   }, [callSubmit]);
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const res = await fetch(
       `http://localhost:3001/users/${userCopy._id}/update`,
@@ -53,6 +56,35 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
       }
     );
     const response = await res.json();
+    if (response.errors.length === 0) {
+      dispatch(setUser({ user: { response } }));
+      dispatch(settingsClose());
+      toast.success("Update was successfull!", {
+        position: "top-center",
+        autoClose: 1200,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else {
+      {
+        response.errors.map((error: any) => {
+          toast.error("Unfortunately:  " + error, {
+            position: "top-center",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+        });
+      }
+    }
   };
 
   const emailBody = (
@@ -184,7 +216,7 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
               ...userCopy,
               location: location.current?.value,
             };
-            dispatch(setCopyLogin({ user: changedUser }));
+            dispatch(setCopyUser({ user: changedUser }));
             if (location.current !== null) location.current.value = "";
             close();
           }}
@@ -224,9 +256,8 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
               ...userCopy,
               occupation: occupancy.current?.value,
             };
-            console.log(changedUser);
             if (occupancy.current !== null) occupancy.current.value = "";
-            dispatch(setCopyLogin({ user: changedUser }));
+            dispatch(setCopyUser({ user: changedUser }));
             close();
           }}
         >

@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import bcrypt from "bcrypt";
 
 // READ
 export const getUser = async (req, res) => {
@@ -74,9 +75,36 @@ export const updateUser = async (req, res) => {
       password,
       currentPassword,
     } = req.body;
-    console.log(req.body);
+    let user = await User.findById(id);
+    let findEmail = await User.findOne({ email: email });
+    let errors = [];
 
-    res.status(200).json(req.body);
+    // EMAIL
+    currentEmail === "" && email === ""
+      ? null
+      : currentEmail !== user.email
+      ? errors.push("Wrong email")
+      : findEmail === null
+      ? (user.email = email)
+      : errors.push("Email exists");
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+    password === "" && currentPassword === ""
+      ? null
+      : isMatch
+      ? (user.password = hashedPassword)
+      : errors.push("Wrong password");
+
+    location === "" ? null : (user.location = location);
+    occupancy === "" ? null : (user.occupation = occupancy);
+    picturePath === "" ? null : (user.picturePath = picturePath);
+
+    const update = await User.findByIdAndUpdate(id, user, { new: true });
+    const sterilizedUser = { ...update._doc, password: "SECRET" };
+
+    res.status(200).json({ user: sterilizedUser, errors: errors });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

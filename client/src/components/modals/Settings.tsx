@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { settingsClose } from "../../state/modal";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdOutlineWork } from "react-icons/md";
-import { setCopyLogin, setLogout } from "../../state";
+import { setCopyUser, setLogout } from "../../state";
 import { useNavigate } from "react-router-dom";
 import { AiFillEdit } from "react-icons/ai";
 import UpdateSettings from "./UpdateSettings";
@@ -23,7 +23,7 @@ const Settings: React.FC<SettingsProps> = ({ open }) => {
   if (open) document.body.style.overflow = "hidden";
   useEffect(() => {
     setCallSubmit(false);
-    if (open) dispatch(setCopyLogin({ user: user }));
+    if (open) dispatch(setCopyUser({ user: user }));
   }, [open]);
 
   const handleUpdate = (type: string) => {
@@ -93,6 +93,7 @@ const Settings: React.FC<SettingsProps> = ({ open }) => {
             className="w-[70%] p-3 bg-[#DC6A00] duration-500 hover:bg-[#DC6A00]/60"
             onClick={() => {
               dispatch(setLogout());
+              dispatch(settingsClose());
               navigate("/");
             }}
           >

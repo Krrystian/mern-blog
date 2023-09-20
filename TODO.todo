@@ -1,10 +1,10 @@
 - [x] Infinite scroll for POSTS - correct API CALLS
-- [] Settings modal for USER
-- [] New post modal for NAVBAR
+- [x] Settings modal for USER
+- [x] New post modal for NAVBAR
 - [x] Unfollow / follow API call
 - [x] Change postUpdate for better UX - update post not posts component
 - [x] Add quill editor for post creation #EDIT: changed mind - just use textarea, rich text is unnecessary
-- [] Modal are you sure you want to unfollow
-- [] Search for POSTS based on USER NAME or LOCATION
+- [x] Search for POSTS based on USER NAME or LOCATION
 
 - [] Profile Page
+- [] UI for mobile devices

@@ -3,6 +3,8 @@ import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import HomePage from "./scenes/homePage";
 import LoginPage from "./scenes/loginPage";
 import ProfilePage from "./scenes/profilePage";
+import { Slide, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <Suspense
@@ -19,6 +21,7 @@ function App() {
           <Route path="/profile/:userId" element={<ProfilePage />} />
         </Routes>
       </BrowserRouter>
+      <ToastContainer limit={2} transition={Slide} />
     </Suspense>
   );
 }

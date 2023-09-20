@@ -42,8 +42,11 @@ export const authSlice = createSlice({
       });
       state.posts = updatedPosts;
     },
-    setCopyLogin: (state, action) => {
+    setCopyUser: (state, action) => {
       state.userCopy = action.payload.user;
+    },
+    setUser: (state, action) => {
+      state.user = state.userCopy;
     },
   },
 });
@@ -54,6 +57,7 @@ export const {
   setLogout,
   setPost,
   setPosts,
-  setCopyLogin,
+  setCopyUser,
+  setUser,
 } = authSlice.actions;
 export default authSlice.reducer;

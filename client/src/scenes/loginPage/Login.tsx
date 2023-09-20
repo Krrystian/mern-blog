@@ -4,17 +4,14 @@ import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
 import Button from "../../components/Button";
 import { useDispatch } from "react-redux";
-import { setCopyLogin, setLogin } from "../../state";
+import { setCopyUser, setLogin } from "../../state";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { toast } from "react-toastify";
 interface LoginProps {
   onClick: () => void;
 }
 export const Login: React.FC<LoginProps> = ({ onClick }) => {
-  // const user = JSON.parse(localStorage.getItem("persist:root") || "{}");
-  // // console.log(JSON.parse(user.user));
-  // const user2 = useSelector((state: any) => state);
-  // console.log(user2);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [disabled, setDisabled] = useState<boolean>(false);
@@ -43,10 +40,29 @@ export const Login: React.FC<LoginProps> = ({ onClick }) => {
       dispatch(
         setLogin({ user: savedUser.sanitizedUser, token: savedUser.token })
       );
-      dispatch(setCopyLogin({ user: savedUser.sanitizedUser }));
+      dispatch(setCopyUser({ user: savedUser.sanitizedUser }));
+      toast.success("Logged in", {
+        position: "top-center",
+        autoClose: 1200,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       navigate("/home");
     } else {
-      alert("Invalid credentials");
+      toast.error("Invalid credentials", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       setValue("password", "");
     }
     setDisabled(false);
