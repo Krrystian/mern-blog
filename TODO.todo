@@ -5,6 +5,7 @@
 - [x] Change postUpdate for better UX - update post not posts component
 - [x] Add quill editor for post creation #EDIT: changed mind - just use textarea, rich text is unnecessary
 - [x] Search for POSTS based on USER NAME or LOCATION
-
+- [] Comment on POSTS
 - [] Profile Page
-- [] UI for mobile devices
+- [+/-] UI for mobile devices
+- [] Make followes modal

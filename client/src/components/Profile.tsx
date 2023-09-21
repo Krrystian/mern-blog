@@ -6,7 +6,7 @@ export const Profile = () => {
   const user = useSelector((state: any) => state.auth.user);
   const dispatch = useDispatch();
   return (
-    <div className="w-[30%] top-[100px] my-6 px-8 fixed">
+    <div className="hidden w-[30%] top-[100px] my-6 px-8 fixed md:flex flex-col">
       <User
         firstName={user.firstName}
         lastName={user.lastName}

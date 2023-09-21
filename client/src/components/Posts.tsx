@@ -58,7 +58,7 @@ const Posts: React.FC<PostsProps> = ({ profilePage = false }) => {
     fetchPosts();
   }, [filter]);
   return (
-    <div className="w-[40%] border-x-2 border-[#DC6A00] min-h-screen text-white">
+    <div className="w-full md:w-[40%] md:border-x-2 border-[#DC6A00] min-h-screen text-white">
       <InfiniteScroll
         dataLength={posts?.length || 0}
         next={fetchMorePosts}

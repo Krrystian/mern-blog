@@ -1,5 +1,5 @@
 import { BiUserMinus, BiUserPlus } from "react-icons/bi";
-import { FiSettings } from "react-icons/fi";
+import { AiFillSetting } from "react-icons/ai";
 interface UserProps {
   firstName: string;
   lastName: string;
@@ -46,7 +46,7 @@ const User: React.FC<UserProps> = ({
         </div>
       </div>
       {settings ? (
-        <FiSettings
+        <AiFillSetting
           className="cursor-pointer"
           size={25}
           onClick={onClickSettings}

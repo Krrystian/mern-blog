@@ -41,7 +41,7 @@ const Following = () => {
   };
 
   return (
-    <div className="fixed w-[30%] right-0 top-[100px] text-[#DC6A00] flex justify-center">
+    <div className="hidden fixed w-[30%] right-0 top-[100px] text-[#DC6A00] md:flex justify-center">
       <div className="w-full min-h-[10%]">
         <h1 className="text-2xl font-bold text-center my-6">Your following</h1>
         <div className="flex flex-col gap-4 px-8">
