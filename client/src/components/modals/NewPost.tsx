@@ -13,13 +13,7 @@ const NewPost: React.FC<NewPostProps> = ({ open }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const user = useSelector((state: any) => state.auth.user);
   const token = useSelector((state: any) => state.auth.token);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-    watch,
-  } = useForm<FieldValues>({
+  const { register, handleSubmit, setValue } = useForm<FieldValues>({
     defaultValues: {
       description: "",
       userId: user._id,

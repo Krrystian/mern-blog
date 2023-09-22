@@ -7,5 +7,6 @@
 - [x] Search for POSTS based on USER NAME or LOCATION
 - [] Comment on POSTS
 - [] Profile Page
-- [+/-] UI for mobile devices
-- [] Make followes modal
+- [+] UI for mobile devices
+- [x] Make followes modal
+- [] Edit post modal

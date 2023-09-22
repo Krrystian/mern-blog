@@ -1,15 +1,19 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { AiFillHome, AiFillSetting, AiFillFileAdd } from "react-icons/ai";
 import { FaUserFriends } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { newPostOpen, setSearchBy } from "../state/modal";
+import { followerOpen, newPostOpen, setSearchBy } from "../state/modal";
 import { settingsOpen } from "../state/modal";
+import FollowersModal from "./modals/FollowersModal";
 
 const Navbar = () => {
   const ref = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const searchBy = useSelector((state: any) => state.modal.post.searchBy);
+  const openFollowers = useSelector(
+    (state: any) => state.modal.follower.isOpen
+  );
   const handleSearch = () => {
     dispatch(setSearchBy({ searchBy: ref.current?.value }));
     window.scrollTo(0, 0);
@@ -60,11 +64,21 @@ const Navbar = () => {
         </div>
       </div>
       <div className="md:hidden p-8 md:p-0 fixed bottom-0 h-[100px] w-full max-w-screen z-10 text-[#DC6A00] text-4xl flex justify-between items-center bg-black/90 ">
-        <AiFillHome onClick={handleHome} />
-        <AiFillSetting onClick={() => dispatch(settingsOpen())} />
-        <AiFillFileAdd onClick={() => dispatch(newPostOpen())} />
-        <FaUserFriends />
+        <AiFillHome className="cursor-pointer" onClick={handleHome} />
+        <AiFillSetting
+          className="cursor-pointer"
+          onClick={() => dispatch(settingsOpen())}
+        />
+        <AiFillFileAdd
+          className="cursor-pointer"
+          onClick={() => dispatch(newPostOpen())}
+        />
+        <FaUserFriends
+          className="cursor-pointer"
+          onClick={() => dispatch(followerOpen())}
+        />
       </div>
+      <FollowersModal open={openFollowers} />
     </>
   );
 };

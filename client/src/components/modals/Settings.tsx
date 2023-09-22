@@ -32,8 +32,8 @@ const Settings: React.FC<SettingsProps> = ({ open }) => {
   };
 
   const body = (
-    <div className="flex flex-col mx-3 py-6">
-      <div className="flex md:flex-row flex-col justify-between py-6 border-t-2 border-[#DC6A00]">
+    <div className="flex flex-col mx-3 pb-3">
+      <div className="flex md:flex-row flex-col py-6 justify-between border-t-2 border-[#DC6A00]">
         <div className="flex flex-col gap-3 w-full items-center">
           <img
             src={userCopy.picturePath}

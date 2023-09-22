@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import HomePage from "./scenes/homePage";
 import LoginPage from "./scenes/loginPage";
@@ -6,6 +6,14 @@ import ProfilePage from "./scenes/profilePage";
 import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function App() {
+  const visibilityChange = () => {
+    if (document.hidden) {
+      document.title = "Why? Don't leave me! ";
+    } else document.title = "Why?";
+  };
+
+  document.addEventListener("visibilitychange", visibilityChange);
+
   return (
     <Suspense
       fallback={

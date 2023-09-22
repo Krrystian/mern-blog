@@ -69,7 +69,7 @@ const Posts: React.FC<PostsProps> = ({ profilePage = false }) => {
           </div>
         }
         endMessage={
-          <div className="w-full flex justify-center items-center text-3xl p-4 pb-8">
+          <div className="w-full flex justify-center items-center text-3xl  p-4 pb-[100px] md:pb-8">
             Sorry, no more posts!
           </div>
         }
