@@ -2,12 +2,14 @@ import { useEffect } from "react";
 import User from "./user/User";
 import { useDispatch, useSelector } from "react-redux";
 import { setFriends } from "../state";
+import { useNavigate } from "react-router-dom";
 
 const Following = () => {
   const userId = useSelector((state: any) => state.auth.user._id);
   const token = useSelector((state: any) => state.auth.token);
   const friends = useSelector((state: any) => state.auth.user.friends);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleFollow = async (id: string) => {
     await fetch(`http://localhost:3001/users/${userId}/${id}/`, {
@@ -59,6 +61,7 @@ const Following = () => {
                     image={picturePath}
                     friend={true}
                     onClickUnfollow={() => handleFollow(_id)}
+                    onClickProfile={() => navigate(`/profile/${_id}`)}
                   />
                 );
               }

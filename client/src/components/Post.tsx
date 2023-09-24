@@ -3,6 +3,8 @@ import User from "./user/User";
 import { BiBone, BiSolidBone, BiCommentDetail } from "react-icons/bi";
 import { setFriends, setPost } from "../state";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { setSearchBy } from "../state/modal";
 interface PostProps {
   id: string;
   postId?: string;
@@ -35,6 +37,7 @@ const Post: React.FC<PostProps> = ({
   const [like, setLike] = useState<boolean>(liked);
   const [likeValue, setLikeValue] = useState<number>(likeAmount);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   //Friend update fetch
   const fetchFriends = async () => {
@@ -90,6 +93,11 @@ const Post: React.FC<PostProps> = ({
         friend={userFriends.some((friend: any) => friend._id === id)}
         isUser={id === userId}
         onClickUnfollow={() => handleAction(id)}
+        onClickProfile={() => {
+          window.scrollTo(0, 0);
+          navigate(`/profile/${id}`);
+          dispatch(setSearchBy({ searchBy: firstName + " " + lastName }));
+        }}
       />
       <div className="max-h-[800px]">
         <p className="text-white/80 text-md">{desc}</p>

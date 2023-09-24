@@ -6,22 +6,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { followerOpen, newPostOpen, setSearchBy } from "../state/modal";
 import { settingsOpen } from "../state/modal";
 import FollowersModal from "./modals/FollowersModal";
+import { useNavigate } from "react-router-dom";
+interface NavbarProps {
+  profile?: boolean;
+}
 
-const Navbar = () => {
+const Navbar: React.FC<NavbarProps> = ({ profile }) => {
   const ref = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const searchBy = useSelector((state: any) => state.modal.post.searchBy);
   const openFollowers = useSelector(
     (state: any) => state.modal.follower.isOpen
   );
   const handleSearch = () => {
-    dispatch(setSearchBy({ searchBy: ref.current?.value }));
-    window.scrollTo(0, 0);
+    if (!profile) {
+      dispatch(setSearchBy({ searchBy: ref.current?.value }));
+      window.scrollTo(0, 0);
+    }
   };
   const handleHome = () => {
     dispatch(setSearchBy({ searchBy: "" }));
     window.scrollTo(0, 0);
-    window.location.reload();
+    navigate("/home");
   };
   return (
     <>
@@ -39,6 +46,7 @@ const Navbar = () => {
             className="text-white/80 w-full p-3 bg-white/10 rounded-xl placeholder-white/80 focus:outline-none text-center "
             placeholder="Search"
             defaultValue={searchBy}
+            disabled={profile}
             ref={ref}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
@@ -47,7 +55,10 @@ const Navbar = () => {
             }}
           ></input>
           <BiSearchAlt
-            className="absolute right-2 cursor-pointer"
+            className={
+              "absolute right-2 " +
+              (profile ? "cursor-default" : "cursor-pointer")
+            }
             onClick={handleSearch}
           />
         </div>

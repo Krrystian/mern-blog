@@ -3,12 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import Post from "./Post";
 import { setPosts } from "../state";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { setSearchBy } from "../state/modal";
 
 interface PostsProps {
-  profilePage?: boolean;
+  profile?: boolean;
 }
-const Posts: React.FC<PostsProps> = ({ profilePage = false }) => {
+const Posts: React.FC<PostsProps> = ({ profile }) => {
   const dispatch = useDispatch();
   const token = useSelector((state: any) => state.auth.token);
   const posts = useSelector((state: any) => state.auth.posts);
@@ -19,8 +18,13 @@ const Posts: React.FC<PostsProps> = ({ profilePage = false }) => {
 
   // FETCH POSTS ON MOUNT
   const fetchPosts = async () => {
+    const link = profile
+      ? `http://localhost:3001/posts/${
+          window.location.pathname.split("/")[2]
+        }/posts`
+      : `http://localhost:3001/posts?filter=${filter}`;
     dispatch(setPosts({ posts: [] }));
-    const res = await fetch(`http://localhost:3001/posts?filter=${filter}`, {
+    const res = await fetch(link, {
       headers: {
         "Cache-Control": "no-cache",
         Authorization: "Bearer " + token,

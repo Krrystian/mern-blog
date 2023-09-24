@@ -64,10 +64,10 @@ const FollowersModal: React.FC<FollowersModalProps> = ({ open }) => {
                     image={picturePath}
                     friend={true}
                     onClickProfile={() => {
-                      //   navigate(`/profile/${_id}`);
-                      dispatch(
-                        setSearchBy({ searchBy: `${firstName} ${lastName}` })
-                      );
+                      navigate(`/profile/${_id}`);
+                      //   dispatch(
+                      //     setSearchBy({ searchBy: `${firstName} ${lastName}` })
+                      //   ); CAN FETCH WITH API ON PROFILE PAGE + SET SEARCH TO DISABLED
                     }}
                     onClickUnfollow={() => handleFollow(_id)}
                   />
