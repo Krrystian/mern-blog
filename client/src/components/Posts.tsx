@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Post from "./Post";
 import { setPosts } from "../state";
 import InfiniteScroll from "react-infinite-scroll-component";
-
 interface PostsProps {
   profile?: boolean;
 }
@@ -73,7 +72,7 @@ const Posts: React.FC<PostsProps> = ({ profile }) => {
           </div>
         }
         endMessage={
-          <div className="w-full flex justify-center items-center text-3xl  p-4 pb-[100px] md:pb-8">
+          <div className="w-full flex justify-center items-center text-3xl p-4 pb-[100px] md:pb-8">
             Sorry, no more posts!
           </div>
         }
@@ -94,6 +93,7 @@ const Posts: React.FC<PostsProps> = ({ profile }) => {
                 likeAmount={Object.keys(post.likes).length}
                 liked={post.likes[userId]}
                 commentsAmount={post.comments.length}
+                profile={profile}
               />
             );
           })}

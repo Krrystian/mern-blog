@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { AiFillHome, AiFillSetting, AiFillFileAdd } from "react-icons/ai";
 import { FaUserFriends } from "react-icons/fa";
@@ -26,10 +26,13 @@ const Navbar: React.FC<NavbarProps> = ({ profile }) => {
     }
   };
   const handleHome = () => {
-    dispatch(setSearchBy({ searchBy: "" }));
     window.scrollTo(0, 0);
+    dispatch(setSearchBy({ searchBy: "" }));
+    if (ref.current) ref.current.value = "";
     navigate("/home");
   };
+
+  const inputProps = profile ? { value: searchBy } : { defaultValue: searchBy };
   return (
     <>
       <div className="p-3 md:p-0 fixed h-[100px] w-full max-w-screen z-10 text-[#DC6A00] border-b-2 border-[#DC6A00] text-4xl flex text-center bg-black/90">
@@ -45,9 +48,9 @@ const Navbar: React.FC<NavbarProps> = ({ profile }) => {
           <input
             className="text-white/80 w-full p-3 bg-white/10 rounded-xl placeholder-white/80 focus:outline-none text-center "
             placeholder="Search"
-            defaultValue={searchBy}
             disabled={profile}
             ref={ref}
+            {...inputProps}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 handleSearch();

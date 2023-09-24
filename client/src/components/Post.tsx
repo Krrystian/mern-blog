@@ -17,6 +17,7 @@ interface PostProps {
   likeAmount?: number;
   liked?: boolean;
   commentsAmount?: number;
+  profile?: boolean;
 }
 const Post: React.FC<PostProps> = ({
   id,
@@ -30,6 +31,7 @@ const Post: React.FC<PostProps> = ({
   liked = false,
   likeAmount = 0,
   commentsAmount = 0,
+  profile,
 }) => {
   const userFriends = useSelector((state: any) => state.auth.user.friends);
   const token = useSelector((state: any) => state.auth.token);
@@ -66,7 +68,6 @@ const Post: React.FC<PostProps> = ({
   };
 
   // Like post
-
   const handleLike = async () => {
     const res = await fetch(`http://localhost:3001/posts/${postId}/like`, {
       method: "PATCH",
@@ -90,8 +91,10 @@ const Post: React.FC<PostProps> = ({
         lastName={lastName}
         image={profilePicture}
         location={location}
-        friend={userFriends.some((friend: any) => friend._id === id)}
-        isUser={id === userId}
+        friend={
+          profile ? false : userFriends.some((friend: any) => friend._id === id)
+        }
+        isUser={profile ? true : id === userId}
         onClickUnfollow={() => handleAction(id)}
         onClickProfile={() => {
           window.scrollTo(0, 0);

@@ -30,8 +30,11 @@ const ProfilePage = () => {
           <Settings open={openSettings} />
           <Navbar profile />
           <Profile />
-          <Following />
-          <div className="flex justify-center flex-row pt-[100px]">
+          <div>
+            <Following profile />
+            <Profile profile />
+          </div>
+          <div className="flex justify-center flex-row md:pt-[100px]">
             <Posts profile />
           </div>
         </div>
