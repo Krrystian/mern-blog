@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCopyUser, setUser } from "../../state";
 import { settingsClose } from "../../state/modal";
 import { toast } from "react-toastify";
+import UploadWidget from "../UploadWidget";
 interface UpdateSettingsProps {
   open: boolean;
   type: string;
@@ -38,6 +39,7 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
   const occupancy = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
   const currentPassword = useRef<HTMLInputElement>(null);
+  const [picture, setPicture] = React.useState<string>("");
 
   useEffect(() => {
     if (callSubmit) handleSubmit(onSubmit)();
@@ -267,10 +269,42 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
     </div>
   );
 
+  const pictureBody = (
+    <div className="mx-3 py-6 font-medium grid grid-cols-2 text-xl border-t-2 border-[#DC6A00]">
+      <div className="col-span-2 flex flex-col justify-center items-center">
+        <UploadWidget setUrl={(value: string) => setPicture(value)} />
+      </div>
+      <div className="col-span-2 w-full flex gap-2 mt-6">
+        <button
+          className="w-[50%] p-3 bg-[#DC6A00] duration-500 hover:bg-[#DC6A00]/60"
+          onClick={() => {
+            close();
+          }}
+        >
+          Cancel
+        </button>
+        <button
+          className="w-[50%] p-3 bg-[#DC6A00] duration-500 hover:bg-[#DC6A00]/60"
+          onClick={() => {
+            setValue("picturePath", picture);
+            const changedUser = {
+              ...userCopy,
+              picturePath: picture,
+            };
+            dispatch(setCopyUser({ user: changedUser }));
+            close();
+          }}
+        >
+          Continue
+        </button>
+      </div>
+    </div>
+  );
   const header = useMemo(() => {
     if (type === "email") return "Change email";
     else if (type === "password") return "Change password";
     else if (type === "location") return "Change location";
+    else if (type === "picture") return "Change picture";
     else return "Change occupancy";
   }, [type]);
 
@@ -278,6 +312,7 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
     if (type === "email") return emailBody;
     else if (type === "password") return passwordBody;
     else if (type === "location") return locationBody;
+    else if (type === "picture") return pictureBody;
     else return occupancyBody;
   }, [type]);
 

@@ -8,24 +8,33 @@ interface ProfileProps {
   profile?: boolean;
 }
 export const Profile: React.FC<ProfileProps> = ({ profile }) => {
-  const [user, setUser] = useState<any>(
-    useSelector((state: any) => state.auth.user)
-  );
+  const loggedUser = useSelector((state: any) => state.auth.user);
+  const [user, setUser] = useState<any>(loggedUser);
   const userId = useSelector((state: any) => state.auth.user._id);
   const token = useSelector((state: any) => state.auth.token);
   const userFriends = useSelector((state: any) => state.auth.user.friends);
   const searchBy = useSelector((state: any) => state.modal.post.searchBy);
   const dispatch = useDispatch();
   const fetchProfile = async () => {
-    const res = await fetch(
-      `http://localhost:3001/users/${window.location.pathname.split("/")[2]}`,
-      {
+    let res: Response;
+    if (profile) {
+      res = await fetch(
+        `http://localhost:3001/users/${window.location.pathname.split("/")[2]}`,
+        {
+          headers: {
+            "Cache-Control": "no-cache",
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+    } else {
+      res = await fetch(`http://localhost:3001/users/${userId}`, {
         headers: {
           "Cache-Control": "no-cache",
           Authorization: "Bearer " + token,
         },
-      }
-    );
+      });
+    }
     const response = await res.json();
     setUser(response);
   };
@@ -53,10 +62,8 @@ export const Profile: React.FC<ProfileProps> = ({ profile }) => {
     }
   };
   useEffect(() => {
-    if (profile) {
-      fetchProfile();
-    }
-  }, [searchBy]);
+    fetchProfile();
+  }, [searchBy, loggedUser]);
   return (
     <div
       className={

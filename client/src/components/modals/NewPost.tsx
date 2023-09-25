@@ -3,13 +3,15 @@ import Modal from "./Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 import UploadWidget from "../UploadWidget";
-import { newPostClose } from "../../state/modal";
+import { newPostClose, setSearchBy } from "../../state/modal";
+import { useNavigate } from "react-router-dom";
 interface NewPostProps {
   open: boolean;
 }
 
 const NewPost: React.FC<NewPostProps> = ({ open }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
   const user = useSelector((state: any) => state.auth.user);
   const token = useSelector((state: any) => state.auth.token);
@@ -43,7 +45,9 @@ const NewPost: React.FC<NewPostProps> = ({ open }) => {
     }
     if (res.ok) {
       dispatch(newPostClose());
+      dispatch(setSearchBy({ searchBy: "" }));
       window.scrollTo(0, 0);
+      navigate("/");
       window.location.reload();
     }
     setLoading(false);

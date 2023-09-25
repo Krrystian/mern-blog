@@ -40,7 +40,8 @@ const Settings: React.FC<SettingsProps> = ({ open }) => {
             alt="user"
             width={75}
             height={75}
-            className="cursor-pointer border rounded-full"
+            className="cursor-pointer rounded-full w-20 h-20"
+            onClick={() => handleUpdate("picture")}
           />
           <div className="flex gap-3 cursor-default">
             <p className="text-2xl flex items-center">

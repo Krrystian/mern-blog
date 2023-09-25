@@ -78,7 +78,6 @@ export const updateUser = async (req, res) => {
     let user = await User.findById(id);
     let findEmail = await User.findOne({ email: email });
     let errors = [];
-
     // EMAIL
     currentEmail === "" && email === ""
       ? null
@@ -100,10 +99,8 @@ export const updateUser = async (req, res) => {
     location === "" ? null : (user.location = location);
     occupancy === "" ? null : (user.occupation = occupancy);
     picturePath === "" ? null : (user.picturePath = picturePath);
-
     const update = await User.findByIdAndUpdate(id, user, { new: true });
     const sterilizedUser = { ...update._doc, password: "SECRET" };
-
     res.status(200).json({ user: sterilizedUser, errors: errors });
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -6,7 +6,7 @@
 - [x] Add quill editor for post creation #EDIT: changed mind - just use textarea, rich text is unnecessary
 - [x] Search for POSTS based on USER NAME or LOCATION
 - [] Comment on POSTS
-- [] Settings change profilePicture
+- [x] Settings change profilePicture
 - [x] Profile Page 
 - [x] Widget for profile page
 - [x] UI for mobile devices

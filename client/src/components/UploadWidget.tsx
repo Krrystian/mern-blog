@@ -15,7 +15,7 @@ const UploadWidget: React.FC<UploadWidgetProps> = ({ setUrl, loading }) => {
   );
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const uploadPreset = import.meta.env.VITE_CLOUDINARY_PRESET;
-  var myWidget = window.cloudinary.createUploadWidget(
+  const myWidget = window.cloudinary.createUploadWidget(
     {
       cloudName: cloudName,
       uploadPreset: uploadPreset,
@@ -32,7 +32,7 @@ const UploadWidget: React.FC<UploadWidgetProps> = ({ setUrl, loading }) => {
       {image.length === 0 ? (
         <button
           disabled={loading}
-          className="w-full md:w-[50%] h-full bg-[#DC6A00] p-3"
+          className="w-full md:w-[50%] h-full bg-[#DC6A00] duration-500 hover:bg-[#DC6A00]/60 p-3"
           onClick={() => {
             myWidget.open();
           }}
