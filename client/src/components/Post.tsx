@@ -68,7 +68,8 @@ const Post: React.FC<PostProps> = ({
   };
 
   // Like post
-  const handleLike = async () => {
+  const handleLike = async (e: any) => {
+    e.stopPropagation();
     const res = await fetch(`http://localhost:3001/posts/${postId}/like`, {
       method: "PATCH",
       headers: {
@@ -85,7 +86,7 @@ const Post: React.FC<PostProps> = ({
     }
   };
   return (
-    <div className="w-full min-h-[150px] p-6 overflow-hidden">
+    <div className="w-full min-h-[150px] p-6 overflow-hidden hover:bg-white/[0.08] duration-500">
       <User
         firstName={firstName}
         lastName={lastName}
@@ -102,7 +103,10 @@ const Post: React.FC<PostProps> = ({
           dispatch(setSearchBy({ searchBy: firstName + " " + lastName }));
         }}
       />
-      <div className="max-h-[800px]">
+      <div
+        className="max-h-[800px] cursor-pointer"
+        onClick={() => console.log("ok")}
+      >
         <p className="text-white/80 text-md">{desc}</p>
         {image && (
           <img
@@ -114,17 +118,13 @@ const Post: React.FC<PostProps> = ({
       </div>
       <div className="mt-3 flex gap-1">
         {!like ? (
-          <BiBone
-            size={25}
-            className="cursor-pointer"
-            onClick={() => handleLike()}
-          />
+          <BiBone size={25} className="cursor-pointer" onClick={handleLike} />
         ) : (
           <BiSolidBone
             size={25}
             className="cursor-pointer"
             color="#DC6A00"
-            onClick={() => handleLike()}
+            onClick={handleLike}
           />
         )}
         <p className="text-white/80 cursor-default">{likeValue}</p>
