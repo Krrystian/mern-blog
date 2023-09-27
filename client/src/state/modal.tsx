@@ -5,6 +5,7 @@ interface CounterState {
   };
   post: {
     isOpen: boolean;
+    data: any;
     newPostIsOpen: boolean;
     searchBy: string;
   };
@@ -18,6 +19,7 @@ const initialState: CounterState = {
   },
   post: {
     isOpen: false,
+    data: {},
     newPostIsOpen: false,
     searchBy: "",
   },
@@ -45,6 +47,9 @@ export const modalSlice = createSlice({
     postClose: (state) => {
       document.body.style.overflow = "auto";
       state.post.isOpen = false;
+    },
+    postData: (state, action) => {
+      state.post.data = action.payload;
     },
     newPostOpen: (state) => {
       document.body.style.overflow = "hidden";
@@ -78,5 +83,6 @@ export const {
   newPostOpen,
   newPostClose,
   setSearchBy,
+  postData,
 } = modalSlice.actions;
 export default modalSlice.reducer;

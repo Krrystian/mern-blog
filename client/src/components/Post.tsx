@@ -4,7 +4,7 @@ import { BiBone, BiSolidBone, BiCommentDetail } from "react-icons/bi";
 import { setFriends, setPost } from "../state";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { setSearchBy } from "../state/modal";
+import { postData, postOpen, setSearchBy } from "../state/modal";
 interface PostProps {
   id: string;
   postId?: string;
@@ -18,6 +18,7 @@ interface PostProps {
   liked?: boolean;
   commentsAmount?: number;
   profile?: boolean;
+  clickable?: boolean;
 }
 const Post: React.FC<PostProps> = ({
   id,
@@ -32,6 +33,7 @@ const Post: React.FC<PostProps> = ({
   likeAmount = 0,
   commentsAmount = 0,
   profile,
+  clickable = true,
 }) => {
   const userFriends = useSelector((state: any) => state.auth.user.friends);
   const token = useSelector((state: any) => state.auth.token);
@@ -40,8 +42,6 @@ const Post: React.FC<PostProps> = ({
   const [likeValue, setLikeValue] = useState<number>(likeAmount);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  //Friend update fetch
   const fetchFriends = async () => {
     const friendList = await fetch(
       `http://localhost:3001/users/${userId}/friends`,
@@ -105,7 +105,28 @@ const Post: React.FC<PostProps> = ({
       />
       <div
         className="max-h-[800px] cursor-pointer"
-        onClick={() => console.log("ok")}
+        onClick={() => {
+          if (clickable) {
+            dispatch(postOpen());
+            dispatch(
+              postData({
+                data: {
+                  id,
+                  postId,
+                  firstName,
+                  lastName,
+                  profilePicture,
+                  desc,
+                  image,
+                  location,
+                  liked,
+                  likeAmount,
+                  commentsAmount,
+                },
+              })
+            );
+          }
+        }}
       >
         <p className="text-white/80 text-md">{desc}</p>
         {image && (
