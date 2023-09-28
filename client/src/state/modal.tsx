@@ -8,6 +8,7 @@ interface CounterState {
     data: any;
     newPostIsOpen: boolean;
     searchBy: string;
+    isCommentOpen: boolean;
   };
   follower: {
     isOpen: boolean;
@@ -22,6 +23,7 @@ const initialState: CounterState = {
     data: {},
     newPostIsOpen: false,
     searchBy: "",
+    isCommentOpen: false,
   },
   follower: {
     isOpen: false,
@@ -59,6 +61,14 @@ export const modalSlice = createSlice({
       document.body.style.overflow = "auto";
       state.post.newPostIsOpen = false;
     },
+    openComment: (state) => {
+      document.body.style.overflow = "hidden";
+      state.post.isCommentOpen = true;
+    },
+    closeComment: (state) => {
+      document.body.style.overflow = "auto";
+      state.post.isCommentOpen = false;
+    },
     followerOpen: (state) => {
       document.body.style.overflow = "hidden";
       state.follower.isOpen = true;
@@ -84,5 +94,7 @@ export const {
   newPostClose,
   setSearchBy,
   postData,
+  openComment,
+  closeComment,
 } = modalSlice.actions;
 export default modalSlice.reducer;

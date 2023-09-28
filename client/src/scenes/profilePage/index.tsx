@@ -7,6 +7,7 @@ import { Profile } from "../../components/Profile";
 import Posts from "../../components/Posts";
 import NewPost from "../../components/modals/NewPost";
 import Settings from "../../components/modals/Settings";
+import CommentModal from "../../components/modals/CommentModal";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -14,6 +15,9 @@ const ProfilePage = () => {
   const openSettings = useSelector((state: any) => state.modal.settings.isOpen);
   const openNewPost = useSelector(
     (state: any) => state.modal.post.newPostIsOpen
+  );
+  const commentOpen = useSelector(
+    (state: any) => state.modal.post.isCommentOpen
   );
   // Prevents user from accessing this page if not logged in
   useEffect(() => {
@@ -28,6 +32,7 @@ const ProfilePage = () => {
         <div className="max-w-screen min-h-screen overflow-x-hidden">
           <NewPost open={openNewPost} />
           <Settings open={openSettings} />
+          <CommentModal open={commentOpen} />
           <Navbar profile />
           <Profile />
           <div>

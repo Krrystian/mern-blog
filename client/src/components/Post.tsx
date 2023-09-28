@@ -19,6 +19,7 @@ interface PostProps {
   commentsAmount?: number;
   profile?: boolean;
   clickable?: boolean;
+  comments?: any;
 }
 const Post: React.FC<PostProps> = ({
   id,
@@ -34,6 +35,7 @@ const Post: React.FC<PostProps> = ({
   commentsAmount = 0,
   profile,
   clickable = true,
+  comments,
 }) => {
   const userFriends = useSelector((state: any) => state.auth.user.friends);
   const token = useSelector((state: any) => state.auth.token);
@@ -86,7 +88,12 @@ const Post: React.FC<PostProps> = ({
     }
   };
   return (
-    <div className="w-full min-h-[150px] p-6 overflow-hidden hover:bg-white/[0.08] duration-500">
+    <div
+      className={
+        (clickable ? "hover:bg-white/[0.08] p-6 " : null) +
+        "w-full min-h-[150px]  overflow-hidden duration-500"
+      }
+    >
       <User
         firstName={firstName}
         lastName={lastName}
@@ -104,7 +111,9 @@ const Post: React.FC<PostProps> = ({
         }}
       />
       <div
-        className="max-h-[800px] cursor-pointer"
+        className={
+          clickable ? "max-h-[800px] cursor-pointer" : "max-h-[800px] "
+        }
         onClick={() => {
           if (clickable) {
             dispatch(postOpen());
@@ -123,6 +132,7 @@ const Post: React.FC<PostProps> = ({
                   likeAmount,
                   commentsAmount,
                 },
+                comments: comments,
               })
             );
           }

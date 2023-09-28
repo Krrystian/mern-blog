@@ -1,25 +1,35 @@
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "./Modal";
-import { postClose } from "../../state/modal";
+import { openComment, postClose } from "../../state/modal";
 import Post from "../Post";
+import { useEffect, useState } from "react";
+import CommentModal from "./CommentModal";
 interface PostModalProps {
   open: boolean;
 }
 const PostModal: React.FC<PostModalProps> = ({ open }) => {
-  const userId = useSelector((state: any) => state.auth.user._id);
   const data = useSelector((state: any) => state.modal.post.data) || {
-    postId: "",
-    userId: "",
-    firstName: "",
-    lastName: "",
-    location: "",
-    userPicturePath: "",
-    description: "",
-    picturePath: "",
-    likes: {},
+    data: {
+      postId: "",
+      id: "",
+      firstName: "",
+      lastName: "",
+      location: "",
+      profilePicture: "",
+      desc: "",
+      image: "",
+      likes: {},
+    },
     comments: [],
   };
   const dispatch = useDispatch();
+
+  const test = new Map<[string, string, string], string>([
+    [["Krys", "Cich", "picturePath"], ""],
+    [["s", "Cich", "picturePath"], ""],
+  ]); //EXAMPLE
+
+  if (open) document.body.style.overflow = "hidden";
   const body = (
     <div className="flex flex-col mx-3 border-t-2 border-[#DC6A00] py-3">
       <Post
@@ -34,7 +44,19 @@ const PostModal: React.FC<PostModalProps> = ({ open }) => {
         likeAmount={data.data.likeAmount}
         liked={data.data.liked}
         commentsAmount={data.data.commentsAmount}
+        clickable={false}
       />
+      <div>
+        <p className="text-xl text-[#DC6A00] w-full text-center my-6">
+          Comments
+        </p>
+        <button
+          className="w-full p-3 text-center text-white/80 bg-[#DC6A00] hover:bg-[#DC6A00]/60 duration-500 mb-6"
+          onClick={() => dispatch(openComment())}
+        >
+          Add Comment
+        </button>
+      </div>
     </div>
   );
   return (

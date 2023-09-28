@@ -1,5 +1,6 @@
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
+
 interface ModalProps {
   heading?: string;
   body: React.ReactNode;
@@ -8,10 +9,7 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({ heading, body, close }) => {
   return (
-    <div
-      className="xl:w-2/4 w-full md:w-4/5 border-y-4 md:border-4 lg:rounded-xl bg-black text-white border-[#DC6A00] relative overflow-hidden 
-    "
-    >
+    <div className="xl:w-2/4 w-full max-h-[90%] md:w-4/5 border-y-4 md:border-4 lg:rounded-xl bg-black text-white border-[#DC6A00] relative overflow-y-auto">
       <AiOutlineClose
         color="#dc6a00"
         size={40}
@@ -21,7 +19,7 @@ const Modal: React.FC<ModalProps> = ({ heading, body, close }) => {
       <p className="w-full h-[100px] flex text-center justify-center p-8 text-2xl">
         {heading}
       </p>
-      <div className="h-full w-full">{body}</div>
+      <div className="h-full w-full ">{body}</div>
     </div>
   );
 };
