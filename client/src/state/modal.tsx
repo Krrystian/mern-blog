@@ -20,7 +20,7 @@ const initialState: CounterState = {
   },
   post: {
     isOpen: false,
-    data: {},
+    data: { comments: [] },
     newPostIsOpen: false,
     searchBy: "",
     isCommentOpen: false,
@@ -52,6 +52,9 @@ export const modalSlice = createSlice({
     },
     postData: (state, action) => {
       state.post.data = action.payload;
+    },
+    addPostData: (state, action) => {
+      state.post.data.comments.push(action.payload);
     },
     newPostOpen: (state) => {
       document.body.style.overflow = "hidden";
@@ -96,5 +99,6 @@ export const {
   postData,
   openComment,
   closeComment,
+  addPostData,
 } = modalSlice.actions;
 export default modalSlice.reducer;

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "./Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
-import { closeComment } from "../../state/modal";
+import { addPostData, closeComment } from "../../state/modal";
 import { toast } from "react-toastify";
 interface CommentModalProps {
   open: boolean;
@@ -16,6 +16,7 @@ const CommentModal: React.FC<CommentModalProps> = ({ open }) => {
   const post = useSelector((state: any) => state.modal.post.data);
   const { register, handleSubmit, setValue } = useForm<FieldValues>({
     defaultValues: {
+      id: "",
       firstName: "",
       lastName: "",
       userPicturePath: "",
@@ -58,7 +59,8 @@ const CommentModal: React.FC<CommentModalProps> = ({ open }) => {
         theme: "dark",
       });
     }
-    close();
+    dispatch(addPostData(data));
+    dispatch(closeComment());
     setLoading(false);
   };
 
@@ -86,8 +88,8 @@ const CommentModal: React.FC<CommentModalProps> = ({ open }) => {
             setValue("firstName", user.firstName);
             setValue("lastName", user.lastName);
             setValue("userPicturePath", user.picturePath);
+            setValue("id", user._id);
             handleSubmit(onSubmit)();
-            close();
           }}
         >
           Continue

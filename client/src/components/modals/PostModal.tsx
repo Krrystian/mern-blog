@@ -1,13 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "./Modal";
-import { openComment, postClose } from "../../state/modal";
+import { openComment, postClose, setSearchBy } from "../../state/modal";
 import Post from "../Post";
-import { useEffect, useState } from "react";
-import CommentModal from "./CommentModal";
+import User from "../user/User";
+import { useNavigate } from "react-router-dom";
 interface PostModalProps {
   open: boolean;
 }
 const PostModal: React.FC<PostModalProps> = ({ open }) => {
+  const navigate = useNavigate();
   const data = useSelector((state: any) => state.modal.post.data) || {
     data: {
       postId: "",
@@ -23,12 +24,6 @@ const PostModal: React.FC<PostModalProps> = ({ open }) => {
     comments: [],
   };
   const dispatch = useDispatch();
-
-  const test = new Map<[string, string, string], string>([
-    [["Krys", "Cich", "picturePath"], ""],
-    [["s", "Cich", "picturePath"], ""],
-  ]); //EXAMPLE
-
   if (open) document.body.style.overflow = "hidden";
   const body = (
     <div className="flex flex-col mx-3 border-t-2 border-[#DC6A00] py-3">
@@ -56,6 +51,23 @@ const PostModal: React.FC<PostModalProps> = ({ open }) => {
         >
           Add Comment
         </button>
+        {data.comments.map((comment: any) => (
+          <div className="mb-6">
+            <User
+              firstName={comment.firstName}
+              lastName={comment.lastName}
+              image={comment.userPicturePath}
+              settings={false}
+              friend={false}
+              isUser={true}
+              onClickProfile={() => {
+                navigate(`/profile/${comment.userId}`);
+                dispatch(postClose());
+              }}
+            />
+            <p className="text-white/80">{comment.comment}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
