@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { useForm, FieldValues, SubmitHandler, set } from "react-hook-form";
+import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 import { closeComment } from "../../state/modal";
-import state from "../../state";
+import { toast } from "react-toastify";
 interface CommentModalProps {
   open: boolean;
 }
@@ -24,7 +24,41 @@ const CommentModal: React.FC<CommentModalProps> = ({ open }) => {
   });
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setLoading(true);
-    console.log(data);
+    const res = await fetch(
+      `http://localhost:3001/posts/${post.data.postId}/comment`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    if (res.ok) {
+      toast.success("Comment has been added!", {
+        position: "top-center",
+        autoClose: 1200,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else {
+      toast.error("Comment could not be added!", {
+        position: "top-center",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+    close();
     setLoading(false);
   };
 
