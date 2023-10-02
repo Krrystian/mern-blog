@@ -25,6 +25,7 @@ const PostModal: React.FC<PostModalProps> = ({ open }) => {
   };
   const dispatch = useDispatch();
   if (open) document.body.style.overflow = "hidden";
+  console.log("POSTMODAL" + data.data.postId);
   const body = (
     <div className="flex flex-col mx-3 border-t-2 border-[#DC6A00] py-3">
       <Post

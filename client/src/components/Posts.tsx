@@ -76,6 +76,7 @@ const Posts: React.FC<PostsProps> = ({ profile }) => {
         >
           {posts?.length > 0 &&
             posts.map((post: any) => {
+              console.log("POST" + post);
               return (
                 <Post
                   key={post._id}
