@@ -23,17 +23,7 @@
   "author": "",
   "license": "MIT",
   "description": "",
-  "version": "2",
-    "builds": [
-        {
-            "src": "*.js",
-            "use": "@vercel/node"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "/"
-        }
-    ]
+  "engines": {
+    "node": "14.x"
+  }
 }
