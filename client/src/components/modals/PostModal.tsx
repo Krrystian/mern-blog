@@ -30,15 +30,15 @@ const PostModal: React.FC<PostModalProps> = ({ open }) => {
       <Post
         postId={data.data?.postId || ""}
         id={data.data?.id || ""}
-        firstName={data.data.firstName}
-        lastName={data.data.lastName}
-        location={data.data.location}
-        profilePicture={data.data.profilePicture}
-        desc={data.data.desc}
-        image={data.data.image}
-        likeAmount={data.data.likeAmount}
-        liked={data.data.liked}
-        commentsAmount={data.data.commentsAmount}
+        firstName={data.data?.firstName || ""}
+        lastName={data.data?.lastName || ""}
+        location={data.data?.location || ""}
+        profilePicture={data.data?.profilePicture || ""}
+        desc={data.data?.desc || ""}
+        image={data.data?.image || ""}
+        likeAmount={data.data?.likeAmount || ""}
+        liked={data.data?.liked || ""}
+        commentsAmount={data.data?.commentsAmount || ""}
         clickable={false}
       />
       <div>
