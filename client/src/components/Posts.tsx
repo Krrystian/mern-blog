@@ -14,14 +14,13 @@ const Posts: React.FC<PostsProps> = ({ profile }) => {
   const filter = useSelector((state: any) => state.modal.post.searchBy);
   const [page, setPage] = useState<number>(-1);
   const [newData, setNewData] = useState<any>();
+  const url = import.meta.env.VITE_API_URL;
 
   // FETCH POSTS ON MOUNT
   const fetchPosts = async () => {
     const link = profile
-      ? `http://localhost:3001/posts/${
-          window.location.pathname.split("/")[2]
-        }/posts`
-      : `http://localhost:3001/posts?filter=${filter}`;
+      ? `${url}/posts/${window.location.pathname.split("/")[2]}/posts`
+      : `${url}/posts?filter=${filter}`;
     dispatch(setPosts({ posts: [] }));
     const res = await fetch(link, {
       headers: {
@@ -37,15 +36,12 @@ const Posts: React.FC<PostsProps> = ({ profile }) => {
   const fetchMorePosts = async () => {
     const newPage = page + 1;
     setPage(newPage);
-    const res = await fetch(
-      `http://localhost:3001/posts?page=${newPage}&filter=${filter}`,
-      {
-        headers: {
-          "Cache-Control": "no-cache",
-          Authorization: "Bearer " + token,
-        },
-      }
-    );
+    const res = await fetch(`${url}/posts?page=${newPage}&filter=${filter}`, {
+      headers: {
+        "Cache-Control": "no-cache",
+        Authorization: "Bearer " + token,
+      },
+    });
     const data = await res.json();
     if (posts && Array.isArray(posts)) {
       const newData = data.filter((newPost: any) => {

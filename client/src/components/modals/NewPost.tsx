@@ -16,6 +16,7 @@ const NewPost: React.FC<NewPostProps> = ({ open }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const user = useSelector((state: any) => state.auth.user);
   const token = useSelector((state: any) => state.auth.token);
+  const url = import.meta.env.VITE_API_URL;
   const { register, handleSubmit, setValue } = useForm<FieldValues>({
     defaultValues: {
       description: "",
@@ -33,7 +34,7 @@ const NewPost: React.FC<NewPostProps> = ({ open }) => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setLoading(true);
-    const res = await fetch("http://localhost:3001/posts", {
+    const res = await fetch(`${url}/posts`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

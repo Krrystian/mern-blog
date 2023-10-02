@@ -15,6 +15,7 @@ export const Login: React.FC<LoginProps> = ({ onClick }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [disabled, setDisabled] = useState<boolean>(false);
+  const url = import.meta.env.VITE_API_URL;
   const {
     register,
     handleSubmit,
@@ -29,7 +30,7 @@ export const Login: React.FC<LoginProps> = ({ onClick }) => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setDisabled(true);
-    const savedUserResponse = await fetch("http://localhost:3001/auth/login", {
+    const savedUserResponse = await fetch(`${url}/auth/login`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(data),

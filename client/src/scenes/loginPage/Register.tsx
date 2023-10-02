@@ -12,6 +12,7 @@ interface RegisterProps {
 }
 export const Register: React.FC<RegisterProps> = ({ onClick }) => {
   const [disabled, setDisabled] = useState<boolean>(false);
+  const url = import.meta.env.VITE_API_URL;
   const {
     register,
     handleSubmit,
@@ -31,14 +32,11 @@ export const Register: React.FC<RegisterProps> = ({ onClick }) => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setDisabled(true);
-    const savedUserResponse = await fetch(
-      "http://localhost:3001/auth/register",
-      {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(data),
-      }
-    );
+    const savedUserResponse = await fetch(`${url}/auth/register`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(data),
+    });
     const savedUser = await savedUserResponse.json();
     if (savedUserResponse.ok) {
       toast.success("Your account has been created!", {

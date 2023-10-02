@@ -14,9 +14,10 @@ const Following: React.FC<FollowingProps> = ({ profile }) => {
   const friends = useSelector((state: any) => state.auth.user.friends);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const url = import.meta.env.VITE_API_URL;
 
   const handleFollow = async (id: string) => {
-    await fetch(`http://localhost:3001/users/${userId}/${id}/`, {
+    await fetch(`${url}/users/${userId}/${id}/`, {
       method: "PATCH",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -24,13 +25,10 @@ const Following: React.FC<FollowingProps> = ({ profile }) => {
   };
 
   const fetchFriends = async () => {
-    const friendList = await fetch(
-      `http://localhost:3001/users/${userId}/friends`,
-      {
-        method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
+    const friendList = await fetch(`${url}/users/${userId}/friends`, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    });
     if (friendList.ok) {
       const data = await friendList.json();
       dispatch(setFriends({ friends: data }));

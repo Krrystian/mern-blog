@@ -14,6 +14,7 @@ const CommentModal: React.FC<CommentModalProps> = ({ open }) => {
   const user = useSelector((state: any) => state.auth.user);
   const token = useSelector((state: any) => state.auth.token);
   const post = useSelector((state: any) => state.modal.post.data);
+  const url = import.meta.env.VITE_API_URL;
   const { register, handleSubmit, setValue } = useForm<FieldValues>({
     defaultValues: {
       id: "",
@@ -25,17 +26,14 @@ const CommentModal: React.FC<CommentModalProps> = ({ open }) => {
   });
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setLoading(true);
-    const res = await fetch(
-      `http://localhost:3001/posts/${post.data.postId}/comment`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const res = await fetch(`${url}/posts/${post.data.postId}/comment`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
     if (res.ok) {
       toast.success("Comment has been added!", {
         position: "top-center",

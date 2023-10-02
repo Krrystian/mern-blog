@@ -15,18 +15,16 @@ export const Profile: React.FC<ProfileProps> = ({ profile }) => {
   const userFriends = useSelector((state: any) => state.auth.user.friends);
   const searchBy = useSelector((state: any) => state.modal.post.searchBy);
   const dispatch = useDispatch();
+  const url = import.meta.env.VITE_API_URL;
   const fetchProfile = async () => {
     let res: Response;
     if (profile) {
-      res = await fetch(
-        `http://localhost:3001/users/${window.location.pathname.split("/")[2]}`,
-        {
-          headers: {
-            "Cache-Control": "no-cache",
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
+      res = await fetch(`${url}/${window.location.pathname.split("/")[2]}`, {
+        headers: {
+          "Cache-Control": "no-cache",
+          Authorization: "Bearer " + token,
+        },
+      });
     } else {
       res = await fetch(`http://localhost:3001/users/${userId}`, {
         headers: {
