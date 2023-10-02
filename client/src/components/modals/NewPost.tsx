@@ -5,6 +5,7 @@ import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 import UploadWidget from "../UploadWidget";
 import { newPostClose, setSearchBy } from "../../state/modal";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 interface NewPostProps {
   open: boolean;
 }
@@ -41,7 +42,16 @@ const NewPost: React.FC<NewPostProps> = ({ open }) => {
       body: JSON.stringify(data),
     });
     if (!res.ok) {
-      console.log("Error");
+      toast.error("Something went wrong!", {
+        position: "top-center",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
     if (res.ok) {
       dispatch(newPostClose());
@@ -49,6 +59,16 @@ const NewPost: React.FC<NewPostProps> = ({ open }) => {
       window.scrollTo(0, 0);
       navigate("/");
       window.location.reload();
+      toast.success("Post added successfully!", {
+        position: "top-center",
+        autoClose: 1200,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
     setLoading(false);
   };
