@@ -1,0 +1,7 @@
+{
+    "routes": [
+      { "src": "/", "dest": "/" },
+      { "src": "/home", "dest": "/home" },
+      { "src": "/profile/:id", "dest": "/profile/:id" }
+    ]
+  }
