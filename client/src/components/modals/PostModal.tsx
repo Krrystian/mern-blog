@@ -29,7 +29,7 @@ const PostModal: React.FC<PostModalProps> = ({ open }) => {
     <div className="flex flex-col mx-3 border-t-2 border-[#DC6A00] py-3">
       <Post
         postId={data.data?.postId || ""}
-        id={data.data.id}
+        id={data.data?.id || ""}
         firstName={data.data.firstName}
         lastName={data.data.lastName}
         location={data.data.location}
