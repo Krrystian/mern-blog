@@ -5,7 +5,26 @@ interface CounterState {
   };
   post: {
     isOpen: boolean;
-    data: any;
+    data: {
+      postId: string;
+      id: string;
+      firstName: string;
+      lastName: string;
+      location: string;
+      profilePicture: string;
+      desc: string;
+      image: string;
+      likes: {};
+      comments: [
+        {
+          id: string;
+          firstName: string;
+          lastName: string;
+          userPicturePath: string;
+          comment: string;
+        }
+      ];
+    };
     newPostIsOpen: boolean;
     searchBy: string;
     isCommentOpen: boolean;
@@ -20,7 +39,26 @@ const initialState: CounterState = {
   },
   post: {
     isOpen: false,
-    data: { comments: [] },
+    data: {
+      postId: "",
+      id: "",
+      firstName: "",
+      lastName: "",
+      location: "",
+      profilePicture: "",
+      desc: "",
+      image: "",
+      likes: {},
+      comments: [
+        {
+          id: "",
+          firstName: "",
+          lastName: "",
+          userPicturePath: "",
+          comment: "",
+        },
+      ],
+    },
     newPostIsOpen: false,
     searchBy: "",
     isCommentOpen: false,

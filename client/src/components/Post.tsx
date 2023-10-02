@@ -69,7 +69,6 @@ const Post: React.FC<PostProps> = ({
 
   // Like post
   const handleLike = async (e: any) => {
-    console.log("POSTS" + postId);
     const res = await fetch(`${url}/posts/${postId}/like`, {
       method: "PATCH",
       headers: {

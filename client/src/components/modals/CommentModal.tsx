@@ -26,7 +26,6 @@ const CommentModal: React.FC<CommentModalProps> = ({ open }) => {
   });
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setLoading(true);
-    console.log("COMMENTS" + post.data.postId);
     const res = await fetch(`${url}/posts/${post.data.postId}/comment`, {
       method: "PATCH",
       headers: {
