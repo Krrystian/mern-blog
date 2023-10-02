@@ -6,7 +6,6 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "gridfs-stream": "^1.1.1",
-    "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.5.0",
     "morgan": "^1.10.0",
@@ -17,11 +16,13 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-   "start": "node index.js" 
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "description": "",
-  "engines":{ "node": "18.x" }
+  "engines": {
+    "node": "18.x"
+  }
 }
