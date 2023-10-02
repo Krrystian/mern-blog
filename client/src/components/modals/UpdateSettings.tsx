@@ -40,23 +40,21 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
   const password = useRef<HTMLInputElement>(null);
   const currentPassword = useRef<HTMLInputElement>(null);
   const [picture, setPicture] = React.useState<string>("");
+  const url = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     if (callSubmit) handleSubmit(onSubmit)();
   }, [callSubmit]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const res = await fetch(
-      `http://localhost:3001/users/${userCopy._id}/update`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const res = await fetch(`${url}/users/${userCopy._id}/update`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
     const response = await res.json();
     if (response.errors.length === 0) {
       dispatch(setUser({ user: { response } }));

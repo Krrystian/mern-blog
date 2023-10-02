@@ -9,20 +9,7 @@ interface PostModalProps {
 }
 const PostModal: React.FC<PostModalProps> = ({ open }) => {
   const navigate = useNavigate();
-  const data = useSelector((state: any) => state.modal.post.data) || {
-    data: {
-      postId: "",
-      id: "",
-      firstName: "",
-      lastName: "",
-      location: "",
-      profilePicture: "",
-      desc: "",
-      image: "",
-      likes: {},
-    },
-    comments: [],
-  };
+  const data = useSelector((state: any) => state.modal.post.data);
   const dispatch = useDispatch();
   if (open) document.body.style.overflow = "hidden";
   const body = (
@@ -38,7 +25,7 @@ const PostModal: React.FC<PostModalProps> = ({ open }) => {
         image={data.data?.image || ""}
         likeAmount={data.data?.likeAmount || ""}
         liked={data.data?.liked || ""}
-        commentsAmount={data.data?.commentsAmount || ""}
+        commentsAmount={data.data?.commentsAmount || 0}
         clickable={false}
       />
       <div>
