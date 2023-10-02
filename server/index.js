@@ -24,11 +24,6 @@ app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: "true" }));
 app.use(cors());
-//added
-app.use(express.static(path.join(__dirname, "build")));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
 
 // POST REQUESTS
 app.post("/auth/register", register);
