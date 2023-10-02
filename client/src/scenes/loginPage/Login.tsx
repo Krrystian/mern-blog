@@ -30,7 +30,7 @@ export const Login: React.FC<LoginProps> = ({ onClick }) => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setDisabled(true);
-    console.log(url);
+    //console.log(url);
     const savedUserResponse = await fetch(`${url}/auth/login`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
