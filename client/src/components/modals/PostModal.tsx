@@ -51,8 +51,8 @@ const PostModal: React.FC<PostModalProps> = ({ open }) => {
         >
           Add Comment
         </button>
-        {data.comments.map((comment: any) => (
-          <div className="mb-6">
+        {data.comments.map((comment: any, index: number) => (
+          <div className="mb-6" key={index}>
             <User
               firstName={comment.firstName}
               lastName={comment.lastName}

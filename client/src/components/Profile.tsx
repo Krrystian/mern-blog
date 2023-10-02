@@ -26,7 +26,7 @@ export const Profile: React.FC<ProfileProps> = ({ profile }) => {
         },
       });
     } else {
-      res = await fetch(`http://localhost:3001/users/${userId}`, {
+      res = await fetch(`${url}/users/${userId}`, {
         headers: {
           "Cache-Control": "no-cache",
           Authorization: "Bearer " + token,
