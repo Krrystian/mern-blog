@@ -17,7 +17,9 @@ export const register = async (req, res) => {
     } = req.body;
     const isMatch = User.findById({ email: email });
     if (isMatch) {
-      return res.status(500).json({ error: "User already exists" });
+      return res
+        .status(500)
+        .json({ error: "User already exists", isMatch: isMatch });
     }
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
