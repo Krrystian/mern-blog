@@ -15,7 +15,7 @@ export const register = async (req, res) => {
       location,
       occupation,
     } = req.body;
-    const isMatch = await User.findById({ email: email });
+    const isMatch = await User.findOne({ email: email });
     const us = await isMatch.json();
     if (isMatch) {
       return res.status(500).json({ error: "User already exists", user: us });
