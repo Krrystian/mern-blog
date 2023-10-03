@@ -1,7 +1,9 @@
 {
     "routes": [
       { "src": "/", "dest": "/" },
-      { "src": "/home", "dest": "/" },
-      { "src": "/profile/:id", "dest": "/" }
+      { "src": "/home", "dest": "/" }
+    ],
+    "rewrites" : [
+      { "source": "/(.*)*", "destination": "/" }
     ]
-  }
+}
