@@ -4,20 +4,17 @@ import { RiAccountBoxLine, RiEyeOffLine } from "react-icons/ri";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
 import Button from "../../components/Button";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { toast } from "react-toastify";
 
 interface RegisterProps {
   onClick: () => void;
+  onChange: (value: boolean) => void;
 }
-export const Register: React.FC<RegisterProps> = ({ onClick }) => {
+export const Register: React.FC<RegisterProps> = ({ onClick, onChange }) => {
   const [disabled, setDisabled] = useState<boolean>(false);
   const url = import.meta.env.VITE_API_URL;
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FieldValues>({
+  const { register, handleSubmit } = useForm<FieldValues>({
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -29,6 +26,9 @@ export const Register: React.FC<RegisterProps> = ({ onClick }) => {
       occupation: "",
     },
   });
+  const handleChange = useCallback(() => {
+    onChange(false);
+  }, [onChange]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setDisabled(true);
@@ -49,7 +49,7 @@ export const Register: React.FC<RegisterProps> = ({ onClick }) => {
         progress: undefined,
         theme: "dark",
       });
-      window.location.reload();
+      handleChange();
     } else {
       toast.error(savedUser.error, {
         position: "top-center",

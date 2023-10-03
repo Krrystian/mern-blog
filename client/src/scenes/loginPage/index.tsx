@@ -42,7 +42,10 @@ const LoginPage = () => {
       {register === false ? (
         <Login onClick={loginHandler} />
       ) : (
-        <Register onClick={loginHandler} />
+        <Register
+          onClick={loginHandler}
+          onChange={(value) => shouldRegister(value)}
+        />
       )}
       <div className="relative lg:hidden w-full h-[100px] bg-[#DC6A00] overflow-hidden">
         <div className="absolute h-[80px] w-[80px] rounded-full right-[-60px] bg-black/20" />
