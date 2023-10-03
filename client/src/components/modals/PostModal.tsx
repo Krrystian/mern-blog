@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "./Modal";
-import { openComment, postClose, setSearchBy } from "../../state/modal";
+import { openComment, postClose } from "../../state/modal";
 import Post from "../Post";
 import User from "../user/User";
 import { useNavigate } from "react-router-dom";

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface CounterState {
   user: { friends: any } | null;
-  userCopy: { friends: any } | null;
+  userCopy: { friends: any; picturePath: string } | null;
   token: string | null;
   posts: any;
 }
@@ -45,7 +45,7 @@ export const authSlice = createSlice({
     setCopyUser: (state, action) => {
       state.userCopy = action.payload.user;
     },
-    setUser: (state, action) => {
+    setUser: (state) => {
       state.user = state.userCopy;
     },
   },

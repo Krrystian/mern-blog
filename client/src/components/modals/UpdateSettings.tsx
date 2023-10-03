@@ -20,7 +20,7 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
 }) => {
   const userCopy = useSelector((state: any) => state.auth.userCopy);
   const token = useSelector((state: any) => state.auth.token);
-  const { handleSubmit, setValue } = useForm<FieldValues>({
+  const { handleSubmit, setValue, watch } = useForm<FieldValues>({
     defaultValues: {
       id: userCopy._id,
       location: "",
@@ -39,7 +39,6 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
   const occupancy = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
   const currentPassword = useRef<HTMLInputElement>(null);
-  const [picture, setPicture] = React.useState<string>("");
   const url = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
@@ -57,7 +56,7 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
     });
     const response = await res.json();
     if (response.errors.length === 0) {
-      dispatch(setUser({ user: { response } }));
+      dispatch(setUser());
       dispatch(settingsClose());
       toast.success("Update was successfull!", {
         position: "top-center",
@@ -270,12 +269,17 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
   const pictureBody = (
     <div className="mx-3 py-6 font-medium grid grid-cols-2 text-xl border-t-2 border-[#DC6A00]">
       <div className="col-span-2 flex flex-col justify-center items-center">
-        <UploadWidget setUrl={(value: string) => setPicture(value)} />
+        <UploadWidget
+          setUrl={(value: string) => {
+            setValue("picturePath", value);
+          }}
+        />
       </div>
       <div className="col-span-2 w-full flex gap-2 mt-6">
         <button
           className="w-[50%] p-3 bg-[#DC6A00] duration-500 hover:bg-[#DC6A00]/60"
           onClick={() => {
+            setValue("picturePath", "");
             close();
           }}
         >
@@ -284,7 +288,7 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
         <button
           className="w-[50%] p-3 bg-[#DC6A00] duration-500 hover:bg-[#DC6A00]/60"
           onClick={() => {
-            setValue("picturePath", picture);
+            const picture = watch("picturePath");
             const changedUser = {
               ...userCopy,
               picturePath: picture,

@@ -38,20 +38,17 @@ export const Profile: React.FC<ProfileProps> = ({ profile }) => {
   };
 
   const fetchFriends = async () => {
-    const friendList = await fetch(
-      `http://localhost:3001/users/${userId}/friends`,
-      {
-        method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
+    const friendList = await fetch(`${url}/users/${userId}/friends`, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    });
     if (friendList.ok) {
       const data = await friendList.json();
       dispatch(setFriends({ friends: data }));
     }
   };
   const handleAction = async (id: string) => {
-    const res = await fetch(`http://localhost:3001/users/${userId}/${id}/`, {
+    const res = await fetch(`${url}/users/${userId}/${id}/`, {
       method: "PATCH",
       headers: { Authorization: `Bearer ${token}` },
     });

@@ -50,6 +50,7 @@ export const Register: React.FC<RegisterProps> = ({ onClick, onChange }) => {
         theme: "dark",
       });
       handleChange();
+      // window.location.reload(); NEEEDEED?
     } else {
       toast.error(savedUser.error, {
         position: "top-center",

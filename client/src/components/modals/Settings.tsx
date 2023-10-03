@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "./Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { settingsClose } from "../../state/modal";
@@ -16,14 +16,16 @@ const Settings: React.FC<SettingsProps> = ({ open }) => {
   const navigate = useNavigate();
   const userCopy = useSelector((state: any) => state.auth.userCopy);
   const user = useSelector((state: any) => state.auth.user);
-  const [updateModalOpen, setUpdateModalOpen] = React.useState<boolean>(false);
-  const [type, setType] = React.useState<string>("");
-  const [callSubmit, setCallSubmit] = React.useState<boolean>(false);
+  const [updateModalOpen, setUpdateModalOpen] = useState<boolean>(false);
+  const [type, setType] = useState<string>("");
+  const [callSubmit, setCallSubmit] = useState<boolean>(false);
 
   if (open) document.body.style.overflow = "hidden";
   useEffect(() => {
     setCallSubmit(false);
-    if (open) dispatch(setCopyUser({ user: user }));
+    if (open === true) {
+      dispatch(setCopyUser({ user: user }));
+    }
   }, [open]);
 
   const handleUpdate = (type: string) => {
