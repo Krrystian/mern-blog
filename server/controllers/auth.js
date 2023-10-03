@@ -15,11 +15,10 @@ export const register = async (req, res) => {
       location,
       occupation,
     } = req.body;
-    const isMatch = User.findById({ email: email });
+    const isMatch = await User.findById({ email: email });
+    const us = await isMatch.json();
     if (isMatch) {
-      return res
-        .status(500)
-        .json({ error: "User already exists", isMatch: isMatch });
+      return res.status(500).json({ error: "User already exists", user: us });
     }
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
