@@ -20,6 +20,10 @@ const LoginPage = () => {
 
   return (
     <div className="relative h-screen w-screen bg-black overflow-hidden flex flex-col lg:flex-row-reverse">
+      <p className="text-white absolute left-0">
+        Login: visit@visit.com <br />
+        Password: visit
+      </p>
       <img
         className="hidden lg:block object-fit w-[70%]"
         src="/orange_theme.png"
