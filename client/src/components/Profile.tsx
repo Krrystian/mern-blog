@@ -19,12 +19,15 @@ export const Profile: React.FC<ProfileProps> = ({ profile }) => {
   const fetchProfile = async () => {
     let res: Response;
     if (profile) {
-      res = await fetch(`${url}/${window.location.pathname.split("/")[2]}`, {
-        headers: {
-          "Cache-Control": "no-cache",
-          Authorization: "Bearer " + token,
-        },
-      });
+      res = await fetch(
+        `${url}/users/${window.location.pathname.split("/")[2]}`,
+        {
+          headers: {
+            "Cache-Control": "no-cache",
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
     } else {
       res = await fetch(`${url}/users/${userId}`, {
         headers: {
@@ -58,6 +61,7 @@ export const Profile: React.FC<ProfileProps> = ({ profile }) => {
   };
   useEffect(() => {
     fetchProfile();
+    console.log("ok");
   }, [searchBy, loggedUser]);
   return (
     <div
