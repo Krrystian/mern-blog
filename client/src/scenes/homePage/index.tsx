@@ -9,11 +9,13 @@ import NewPost from "../../components/modals/NewPost";
 import Settings from "../../components/modals/Settings";
 import PostModal from "../../components/modals/PostModal";
 import CommentModal from "../../components/modals/CommentModal";
+import LoadingModal from "../../components/modals/LoadingModal";
 
 const HomePage = () => {
   const token = useSelector((state: any) => state.auth.token);
   const navigate = useNavigate();
   const openSettings = useSelector((state: any) => state.modal.settings.isOpen);
+  const loading = useSelector((state: any) => state.modal.loading.isOpen);
   const openNewPost = useSelector(
     (state: any) => state.modal.post.newPostIsOpen
   );
@@ -32,11 +34,11 @@ const HomePage = () => {
     token && (
       <>
         <div className="max-w-screen min-h-screen overflow-x-hidden">
-          <NewPost open={openNewPost} />
-          <PostModal open={openPost} />
-          <Settings open={openSettings} />
-          <CommentModal open={commentOpen} />
-
+          <NewPost open={openNewPost} /> {/*DONE */}
+          <PostModal open={openPost} /> {/*DONE */}
+          <Settings open={openSettings} /> {/*DONE */}
+          <CommentModal open={commentOpen} /> {/*DONE */}
+          <LoadingModal open={loading} />
           <Navbar />
           <Profile />
           <Following />

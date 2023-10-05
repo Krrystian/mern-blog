@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import Modal from "./Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
-import { addPostData, closeComment } from "../../state/modal";
+import {
+  addPostData,
+  closeComment,
+  loadingClose,
+  loadingOpen,
+} from "../../state/modal";
 import { toast } from "react-toastify";
 interface CommentModalProps {
   open: boolean;
@@ -10,7 +15,6 @@ interface CommentModalProps {
 
 const CommentModal: React.FC<CommentModalProps> = ({ open }) => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState<boolean>(false);
   const user = useSelector((state: any) => state.auth.user);
   const token = useSelector((state: any) => state.auth.token);
   const post = useSelector((state: any) => state.modal.post.data);
@@ -25,7 +29,7 @@ const CommentModal: React.FC<CommentModalProps> = ({ open }) => {
     },
   });
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    setLoading(true);
+    dispatch(loadingOpen());
     const res = await fetch(`${url}/posts/${post.data.postId}/comment`, {
       method: "PATCH",
       headers: {
@@ -59,7 +63,7 @@ const CommentModal: React.FC<CommentModalProps> = ({ open }) => {
     }
     dispatch(addPostData(data));
     dispatch(closeComment());
-    setLoading(false);
+    dispatch(loadingClose());
   };
 
   const body = (
@@ -67,7 +71,6 @@ const CommentModal: React.FC<CommentModalProps> = ({ open }) => {
       <textarea
         className="w-full bg-black border-y-2 border-[#DC6A00] resize-none p-3 focus:outline-none placeholder:text-center"
         rows={2}
-        disabled={loading}
         placeholder="Click here to start typing..."
         {...register("comment", { required: true })}
       ></textarea>

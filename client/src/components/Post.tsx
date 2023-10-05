@@ -156,7 +156,31 @@ const Post: React.FC<PostProps> = ({
           />
         )}
         <p className="text-white/80 cursor-default">{likeValue}</p>
-        <BiCommentDetail size={25} className="cursor-pointer ml-3" />
+        <BiCommentDetail
+          size={25}
+          className="cursor-pointer ml-3"
+          onClick={() => {
+            dispatch(postOpen());
+            dispatch(
+              postData({
+                data: {
+                  id,
+                  postId,
+                  firstName,
+                  lastName,
+                  profilePicture,
+                  desc,
+                  image,
+                  location,
+                  liked,
+                  likeAmount,
+                  commentsAmount,
+                },
+                comments: comments,
+              })
+            );
+          }}
+        />
         {commentsAmount > 0 && (
           <p className="text-white/80 cursor-default">{commentsAmount}</p>
         )}

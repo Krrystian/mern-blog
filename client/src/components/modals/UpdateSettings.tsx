@@ -3,7 +3,7 @@ import Modal from "./Modal";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { setCopyUser, setUser } from "../../state";
-import { settingsClose } from "../../state/modal";
+import { loadingClose, loadingOpen, settingsClose } from "../../state/modal";
 import { toast } from "react-toastify";
 import UploadWidget from "../UploadWidget";
 interface UpdateSettingsProps {
@@ -46,6 +46,7 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
   }, [callSubmit]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    dispatch(loadingOpen());
     const res = await fetch(`${url}/users/${userCopy._id}/update`, {
       method: "PATCH",
       headers: {
@@ -84,6 +85,7 @@ const UpdateSettings: React.FC<UpdateSettingsProps> = ({
         });
       }
     }
+    dispatch(loadingClose());
   };
 
   const emailBody = (

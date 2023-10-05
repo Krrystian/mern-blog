@@ -6,13 +6,15 @@ import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
 import Button from "../../components/Button";
 import { useCallback, useState } from "react";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { loadingClose, loadingOpen } from "../../state/modal";
 
 interface RegisterProps {
   onClick: () => void;
   onChange: (value: boolean) => void;
 }
 export const Register: React.FC<RegisterProps> = ({ onClick, onChange }) => {
-  const [disabled, setDisabled] = useState<boolean>(false);
+  const dispatch = useDispatch();
   const url = import.meta.env.VITE_API_URL;
   const { register, handleSubmit } = useForm<FieldValues>({
     defaultValues: {
@@ -31,7 +33,7 @@ export const Register: React.FC<RegisterProps> = ({ onClick, onChange }) => {
   }, [onChange]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    setDisabled(true);
+    dispatch(loadingOpen());
     const savedUserResponse = await fetch(`${url}/auth/register`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
@@ -50,7 +52,6 @@ export const Register: React.FC<RegisterProps> = ({ onClick, onChange }) => {
         theme: "dark",
       });
       handleChange();
-      // window.location.reload(); NEEEDEED?
     } else {
       toast.error(savedUser.error, {
         position: "top-center",
@@ -63,28 +64,25 @@ export const Register: React.FC<RegisterProps> = ({ onClick, onChange }) => {
         theme: "dark",
       });
     }
-    setDisabled(false);
+    dispatch(loadingClose());
   };
   return (
     <div className="text-white w-full h-full cursor-default flex justify-center items-center flex-col">
       <p className="font-bold text-2xl p-3 ">Register</p>
       <Input
         register={register}
-        disabled={disabled}
         id="firstName"
         placeholder="First name"
         children={<CgNametag color="black" size={40} />}
       />
       <Input
         register={register}
-        disabled={disabled}
         id="lastName"
         placeholder="Last name"
         children={<RiAccountBoxLine color="black" size={40} />}
       />
       <Input
         register={register}
-        disabled={disabled}
         type="email"
         id="email"
         placeholder="Email address"
@@ -92,7 +90,6 @@ export const Register: React.FC<RegisterProps> = ({ onClick, onChange }) => {
       />
       <Input
         register={register}
-        disabled={disabled}
         id="password"
         placeholder="Password"
         type="password"

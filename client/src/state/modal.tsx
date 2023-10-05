@@ -32,6 +32,9 @@ interface CounterState {
   follower: {
     isOpen: boolean;
   };
+  loading: {
+    isOpen: boolean;
+  };
 }
 const initialState: CounterState = {
   settings: {
@@ -64,6 +67,9 @@ const initialState: CounterState = {
     isCommentOpen: false,
   },
   follower: {
+    isOpen: false,
+  },
+  loading: {
     isOpen: false,
   },
 };
@@ -121,6 +127,12 @@ export const modalSlice = createSlice({
     setSearchBy: (state, action) => {
       state.post.searchBy = action.payload.searchBy;
     },
+    loadingOpen: (state) => {
+      state.loading.isOpen = true;
+    },
+    loadingClose: (state) => {
+      state.loading.isOpen = false;
+    },
   },
 });
 
@@ -138,5 +150,7 @@ export const {
   openComment,
   closeComment,
   addPostData,
+  loadingOpen,
+  loadingClose,
 } = modalSlice.actions;
 export default modalSlice.reducer;

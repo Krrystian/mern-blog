@@ -3,18 +3,17 @@ import { RiEyeOffLine } from "react-icons/ri";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
 import Button from "../../components/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCopyUser, setLogin } from "../../state";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { toast } from "react-toastify";
+import { loadingClose, loadingOpen } from "../../state/modal";
 interface LoginProps {
   onClick: () => void;
 }
 export const Login: React.FC<LoginProps> = ({ onClick }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [disabled, setDisabled] = useState<boolean>(false);
   const url = import.meta.env.VITE_API_URL;
   const { register, handleSubmit, setValue } = useForm<FieldValues>({
     defaultValues: {
@@ -22,9 +21,8 @@ export const Login: React.FC<LoginProps> = ({ onClick }) => {
       password: "",
     },
   });
-
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    setDisabled(true);
+    dispatch(loadingOpen());
     const savedUserResponse = await fetch(`${url}/auth/login`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
@@ -61,14 +59,13 @@ export const Login: React.FC<LoginProps> = ({ onClick }) => {
       });
       setValue("password", "");
     }
-    setDisabled(false);
+    dispatch(loadingClose());
   };
   return (
     <div className="text-white w-full h-full cursor-default flex justify-center items-center flex-col">
       <p className="font-bold text-2xl p-3">Sign in</p>
       <Input
         register={register}
-        disabled={disabled}
         type="email"
         id="email"
         placeholder="Email address"
@@ -76,7 +73,6 @@ export const Login: React.FC<LoginProps> = ({ onClick }) => {
       />
       <Input
         register={register}
-        disabled={disabled}
         id="password"
         placeholder="Password"
         type="password"

@@ -12,5 +12,6 @@
 - [x] UI for mobile devices
 - [x] Make followes modal
 - [] Edit post modal
-- [] Make loading modal
+- [x] Make loading modal
+- [] Fix profile page get posts when surname is the same "1" - it gets posts from other users
 - [x] Public website

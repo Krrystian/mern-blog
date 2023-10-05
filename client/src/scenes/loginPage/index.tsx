@@ -3,14 +3,15 @@ import { Register } from "./Register";
 import { Login } from "./Login";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import LoadingModal from "../../components/modals/LoadingModal";
 
 const LoginPage = () => {
   const [register, shouldRegister] = useState<boolean>(false);
   const loginHandler = () => {
     shouldRegister(!register);
   };
-
   const token = useSelector((state: any) => state.auth.token);
+  const loading = useSelector((state: any) => state.modal.loading.isOpen);
   const navigate = useNavigate();
   useEffect(() => {
     if (token) {
@@ -20,6 +21,7 @@ const LoginPage = () => {
 
   return (
     <div className="relative h-screen w-screen bg-black overflow-hidden flex flex-col lg:flex-row-reverse">
+      <LoadingModal open={loading} />
       <p className="text-white absolute left-0">
         Login: visit@visit.com <br />
         Password: visit
