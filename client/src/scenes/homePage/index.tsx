@@ -34,10 +34,10 @@ const HomePage = () => {
     token && (
       <>
         <div className="max-w-screen min-h-screen overflow-x-hidden">
-          <NewPost open={openNewPost} /> {/*DONE */}
-          <PostModal open={openPost} /> {/*DONE */}
-          <Settings open={openSettings} /> {/*DONE */}
-          <CommentModal open={commentOpen} /> {/*DONE */}
+          <NewPost open={openNewPost} />
+          <PostModal open={openPost} />
+          <Settings open={openSettings} />
+          <CommentModal open={commentOpen} />
           <LoadingModal open={loading} />
           <Navbar />
           <Profile />

@@ -30,15 +30,30 @@ export const createPost = async (req, res) => {
 export const getFeedPosts = async (req, res) => {
   const page = req.query.page || 0;
   const filter = req.query.filter || "";
+  const profile = req.query.profile || "";
   const splitted = filter.split(" ");
+  let query;
   try {
-    let query = {
-      $or: [
-        { location: { $regex: filter, $options: "i" } },
-        { firstName: { $regex: splitted[0], $options: "i" } },
-        { lastName: { $regex: splitted[splitted.length - 1], $options: "i" } },
-      ],
-    };
+    if (profile) {
+      query = {
+        $and: [
+          { firstName: { $regex: splitted[0], $options: "i" } },
+          {
+            lastName: { $regex: splitted[splitted.length - 1], $options: "i" },
+          },
+        ],
+      };
+    } else {
+      query = {
+        $or: [
+          { location: { $regex: filter, $options: "i" } },
+          { firstName: { $regex: splitted[0], $options: "i" } },
+          {
+            lastName: { $regex: splitted[splitted.length - 1], $options: "i" },
+          },
+        ],
+      };
+    }
     if (filter === "") {
       delete query.$or;
     }

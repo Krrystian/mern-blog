@@ -36,7 +36,10 @@ const Posts: React.FC<PostsProps> = ({ profile }) => {
   const fetchMorePosts = async () => {
     const newPage = page + 1;
     setPage(newPage);
-    const res = await fetch(`${url}/posts?page=${newPage}&filter=${filter}`, {
+    const link = profile
+      ? `${url}/posts?page=${newPage}&filter=${filter}&profile=true`
+      : `${url}/posts?page=${newPage}&filter=${filter}`;
+    const res = await fetch(link, {
       headers: {
         "Cache-Control": "no-cache",
         Authorization: "Bearer " + token,
