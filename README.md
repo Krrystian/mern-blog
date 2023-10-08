@@ -26,7 +26,6 @@ I was looking for short full-stack project ideas across whole internet and I hav
 4. **YouTube, GitHub repositories, libraries documentation** for knowledge 
 
 ## Web screenshots
-A part of functionalities
 https://github.com/Krrystian/mern-blog/assets/77442325/0cd687eb-8861-4a08-b409-38062e6419c3
 
 
